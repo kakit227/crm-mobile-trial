@@ -758,6 +758,19 @@ dialog.stage-help-dialog::backdrop{background:rgba(0,0,0,.32);backdrop-filter:no
   background-color:var(--appearance-selected,#e5e5e5)
  }
 }
+body[data-modal-locked]{position:fixed;top:var(--modal-scroll-top);left:0;right:0;width:100%;overflow:hidden;overscroll-behavior:none}
+dialog[open],dialog[open] #fields{overscroll-behavior:contain}
+@media(max-width:750px),(any-pointer:coarse){
+ :is(input:not([type="radio"]):not([type="checkbox"]),textarea,select){
+  -webkit-tap-highlight-color:transparent;font-size:max(16px,1em)
+ }
+ html[data-touch-focus] :is(main,dialog) :is(input:not([type="radio"]):not([type="checkbox"]),textarea):focus{
+  outline:none!important;box-shadow:none!important
+ }
+}
+@media(prefers-contrast:more){
+ html[data-touch-focus] :is(main,dialog) :is(input,textarea):focus-visible{outline:2px solid var(--appearance-focus)!important}
+}
 </style>
 
 <aside><header class="studio-brand"><div class="monogram" role="img" aria-label="C 与 H"><span class="signature">C<i>&amp;</i>H</span></div></header><nav></nav></aside><main><div class="trial-banner"><span>测试版，请勿录入真实客户资料</span><button type="button" id="reset-trial">恢复样例</button></div><div class="studio-clock"><time id="studio-clock" aria-label="当前日期"></time></div><div class="bar"><h1></h1><button id="add" class="primary"></button></div><div id="client-tools" hidden></div><div id="metrics"></div><section class="panel"><div id="filters"></div><div id="rows"></div></section></main><dialog aria-labelledby="editor-title"><form><h2 id="editor-title"></h2><div id="fields"></div><div class="actions"><button type="button" id="close">取消</button><button class="primary">保存</button></div></form></dialog><dialog id="delete-client" aria-labelledby="delete-heading" aria-describedby="delete-description"><h2 id="delete-heading">请确认是否删除客户</h2><p id="delete-description"></p><p id="delete-error" role="alert"></p><div class="actions"><button id="delete-cancel" type="button" autofocus>取消</button><button id="delete-confirm" type="button">确认删除</button></div></dialog><dialog id="studio-notice" aria-labelledby="notice-message"><p id="notice-message"></p><form method="dialog"><button autofocus>好</button></form></dialog><dialog id="discard-editor" aria-labelledby="discard-heading" aria-describedby="discard-message"><h2 id="discard-heading">放弃未保存的更改？</h2><p id="discard-message">放弃后，本次编辑的内容将不会保存。</p><form method="dialog" class="actions"><button autofocus>继续编辑</button><button type="button" data-discard>放弃更改</button></form></dialog><script>
@@ -847,7 +860,7 @@ function resolveCycle(id,origin){
    if(persist(next,'确认销售循环 · '+c.姓名))dialog.close();
  };
  dialog.onclose=()=>{dialog.remove();(origin?.isConnected?origin:document.querySelector('#rows button'))?.focus()};
- dialog.showModal();
+ openModal(dialog);
 }
 let page='home', query='', filter='', state={client:[],deal:[],task:[],log:[],meet:[],history:[]}, locked=false;
 function normalizeStore(raw){
@@ -882,6 +895,8 @@ function sampleStore(){
    deal:[],meet:[],history:[]
  };
 }
+let modalScroll=null;
+const modalLayers=new Set();
 let savedVersion=null;
 try{
  savedVersion=localStorage.getItem(key);
@@ -892,7 +907,7 @@ const resetTrialDialog=document.createElement('dialog');
 resetTrialDialog.setAttribute('aria-labelledby','reset-trial-message');
 resetTrialDialog.innerHTML='<p id="reset-trial-message">恢复样例会清除本浏览器中的试用改动。</p><form method="dialog" class="actions"><button type="submit" autofocus>取消</button><button type="button" data-reset-trial>确认恢复</button></form>';
 document.body.append(resetTrialDialog);
-$('#reset-trial').onclick=()=>resetTrialDialog.showModal();
+$('#reset-trial').onclick=()=>openModal(resetTrialDialog);
 resetTrialDialog.querySelector('[data-reset-trial]').onclick=()=>{
  resetTrialDialog.close();
  try{
@@ -1086,7 +1101,43 @@ async function exportClientExcel(trigger,feedback){
 }
 /* Excel export end */
 
-function showNotice(text){const previous=document.activeElement;const notice=document.getElementById("studio-notice");document.getElementById("notice-message").textContent=text;if(!notice.open){notice.addEventListener('close',()=>{if(previous?.isConnected)previous.focus()},{once:true});notice.showModal()}}
+function openModal(dialog,opener=document.activeElement){
+ if(dialog.open)return;
+ const rowId=opener?.closest('[data-row-id]')?.dataset.rowId;
+ const originPage=document.body.dataset.page;
+ if(!modalLayers.size){
+   modalScroll={x:scrollX,y:scrollY};
+   document.body.style.setProperty('--modal-scroll-top',-modalScroll.y+'px');
+   document.body.setAttribute('data-modal-locked','');
+ }
+ modalLayers.add(dialog);
+ function release(event){
+   modalLayers.delete(dialog);
+   if(!modalLayers.size){
+     document.body.removeAttribute('data-modal-locked');
+     document.body.style.removeProperty('--modal-scroll-top');
+     window.scrollTo({left:modalScroll.x,top:modalScroll.y,behavior:'instant'});
+     modalScroll=null;
+   }
+   if(!event)return;
+   let target=opener?.isConnected&&opener!==document.body?opener:null;
+   if(!target&&originPage===document.body.dataset.page){
+     const row=rowId?[...document.querySelectorAll('#rows [data-row-id]')].find(item=>item.dataset.rowId===rowId):null;
+     target=row?.querySelector('button')||document.querySelector('#add:not([hidden])');
+   }
+   if(target&&document.activeElement!==target)target.focus({preventScroll:true});
+ }
+ try{dialog.showModal()}catch(error){release();throw error}
+ dialog.addEventListener('close',release,{once:true});
+}
+document.addEventListener('pointerdown',event=>{
+ document.documentElement.toggleAttribute('data-touch-focus',event.pointerType==='touch');
+},true);
+document.addEventListener('keydown',event=>{
+ if(event.key==='Tab')document.documentElement.removeAttribute('data-touch-focus');
+},true);
+
+function showNotice(text){const previous=document.activeElement;const notice=document.getElementById("studio-notice");document.getElementById("notice-message").textContent=text;if(!notice.open){notice.addEventListener('close',()=>{if(previous?.isConnected)previous.focus()},{once:true});openModal(notice)}}
 function persist(next,msg){
  if(locked){showNotice('当前资料无法安全读取，保存已停用。');return false}
  next.history.unshift({text:msg,date:new Date().toLocaleString('zh-CN')});
@@ -1258,18 +1309,25 @@ function glassChoiceMenu(select,field){
  let targetOpen=false,motion=null;
  const topLayer=cycle&&typeof menu.showPopover==='function';
  if(topLayer)menu.setAttribute('popover','manual');
- let geometryListeners=null;
+ let geometryListeners=null,menuFrame=0;
+ function writeMenuStyle(name,value){
+   if(menu.style[name]!==value)menu.style[name]=value;
+ }
+ function scheduleMenuPlacement(){
+   if(menuFrame||!targetOpen)return;
+   menuFrame=requestAnimationFrame(()=>{menuFrame=0;if(targetOpen)placeMenu()});
+ }
  function placeMenu(){
    const rect=trigger.getBoundingClientRect(),view=window.visualViewport;
    const y=view?.offsetTop||0, height=view?.height||innerHeight;
    const above=Math.max(0,rect.top-y-8),below=Math.max(0,y+height-rect.bottom-8);
    const up=below<240&&above>below;
-   menu.style.maxHeight=Math.min(256,up?above:below)+'px';
-   menu.style.width=rect.width+'px';
-   menu.style.left=(topLayer?rect.left:trigger.offsetLeft)+'px';
+   writeMenuStyle('maxHeight',Math.min(256,up?above:below)+'px');
+   writeMenuStyle('width',rect.width+'px');
+   writeMenuStyle('left',(topLayer?rect.left:trigger.offsetLeft)+'px');
    const start=topLayer?rect.top:trigger.offsetTop;
-   menu.style.top=(up?start-menu.offsetHeight-4:start+rect.height+4)+'px';
-   menu.dataset.side=up?'above':'below';
+   writeMenuStyle('top',(up?start-menu.offsetHeight-4:start+rect.height+4)+'px');
+   const side=up?'above':'below';if(menu.dataset.side!==side)menu.dataset.side=side;
  }
  function animateCycle(open){
    if(open===targetOpen)return;
@@ -1280,16 +1338,24 @@ function glassChoiceMenu(select,field){
      motion=null;
    }
    if(open){
+     menu.style.visibility='hidden';
      menu.hidden=false;
-     if(topLayer&&!menu.matches(':popover-open'))menu.showPopover();
-     placeMenu();
+     try{
+       if(topLayer&&!menu.matches(':popover-open'))menu.showPopover();
+       placeMenu();
+     }finally{menu.style.removeProperty('visibility')}
      geometryListeners?.abort();geometryListeners=new AbortController();
      const opts={passive:true,signal:geometryListeners.signal};
-     wrap.closest('#fields').addEventListener('scroll',placeMenu,opts);
-     window.addEventListener('resize',placeMenu,opts);
-     window.visualViewport?.addEventListener('resize',placeMenu,opts);
-     window.visualViewport?.addEventListener('scroll',placeMenu,opts);
-     menu.closest('dialog').addEventListener('close',()=>{geometryListeners?.abort()},{once:true,signal:geometryListeners.signal});
+     wrap.closest('#fields').addEventListener('scroll',scheduleMenuPlacement,opts);
+     window.addEventListener('resize',scheduleMenuPlacement,opts);
+     window.visualViewport?.addEventListener('resize',scheduleMenuPlacement,opts);
+     window.visualViewport?.addEventListener('scroll',scheduleMenuPlacement,opts);
+     menu.closest('dialog').addEventListener('close',()=>{
+       geometryListeners?.abort();
+       cancelAnimationFrame(menuFrame);menuFrame=0;
+       motion?.cancel();targetOpen=false;menu.hidden=true;menu.inert=true;
+       if(topLayer&&menu.matches(':popover-open'))menu.hidePopover();
+     },{once:true,signal:geometryListeners.signal});
    }
    menu.style.transformOrigin=menu.dataset.side==='above'?'center bottom':'center top';
    const closed={opacity:0,transform:'translateY('+(menu.dataset.side==='above'?4:-4)+'px) scaleY(.985)'};
@@ -1741,7 +1807,7 @@ function timeRangeEditor(parent,record){
 function isPendingTask(task){return openCycle(task)}
 function guardEditor(d,snapshot){
  const initial=snapshot(),prompt=document.getElementById('discard-editor');
- function close(){if(initial===snapshot()){d.close();return}const previous=document.activeElement;prompt.addEventListener('close',()=>{if(d.open&&previous?.isConnected)previous.focus()},{once:true});prompt.showModal();prompt.querySelector('button').focus()}
+ function close(){if(initial===snapshot()){d.close();return}const previous=document.activeElement;prompt.addEventListener('close',()=>{if(d.open&&previous?.isConnected)previous.focus()},{once:true});openModal(prompt);prompt.querySelector('button').focus()}
  document.getElementById('close').onclick=close;
  d.oncancel=e=>{e.preventDefault();close()};
  prompt.querySelector('[data-discard]').onclick=()=>{prompt.close();d.close()};
@@ -1793,7 +1859,7 @@ function showStageInstructions(entry){
  }
  if(dialog.open)return;
  dialog.addEventListener('close',()=>{entry.setAttribute('aria-expanded','false');if(entry.isConnected&&!entry.hidden)entry.focus({preventScroll:true})},{once:true});
- entry.setAttribute('aria-expanded','true');dialog.showModal();
+ entry.setAttribute('aria-expanded','true');openModal(dialog,entry);
  dialog.querySelector('.stage-help-dialog-body').scrollTop=0;
  dialog.querySelector('#stage-instructions-title').focus({preventScroll:true});
  if(!dialog.dataset.cancelBound){dialog.addEventListener('cancel',event=>{event.preventDefault();closeStageInstructions(dialog)});dialog.dataset.cancelBound='true'}
@@ -1830,7 +1896,7 @@ function renderStageHelpEntry(){
  entry.hidden=page!=='client';
 }
 
-function editor(k,r={},fromTask=null,referrer=null){if(k!=='client'&&!state.client.length){showNotice('请先新增客户。');return}
+function editor(k,r={},fromTask=null,referrer=null,opener=document.activeElement){if(k!=='client'&&!state.client.length){showNotice('请先新增客户。');return}
  const d=$('dialog'),fields=$('#fields'),controls={};d.dataset.editor=k;fields.replaceChildren();$('form h2').textContent=(r.id?'编辑':'新增')+names[k];
  for(const f of schema[k]){const label=node('label',k==='client'?clientFieldLabel(f):f,fields);let opts=f==="性别"?[["","请选择"],["男","男"],["女","女"],["其他","其他"]]:f==='客户'?(k==='task'?[lookupClient(r.客户)||state.client[0]].filter(Boolean):state.client).map(c=>[c.id,c.姓名]):(f==='状态'?choices[k]:choices[f])?.map(x=>[x,x]);
  const input=node(opts?'select':f==='备注'?'textarea':'input',null,label);controls[f]=input;
@@ -1905,7 +1971,7 @@ function editor(k,r={},fromTask=null,referrer=null){if(k!=='client'&&!state.clie
  if(k==="client"&&!r.id)item.createdAt=new Date().toISOString();
  if(k==="task"&&e.submitter?.classList.contains("complete-task")){if(next.client.find(c=>String(c.id)===item.客户)?.cycleConflict){showNotice("请先在列表中确认该客户的销售循环。");return}item.completedAt=new Date().toISOString();item.completedCycle=stepLabel(Number(cycle.value))}
  if(r.id)next[k][next[k].findIndex(x=>x.id===r.id)]=item;else next[k].unshift(item);if(fromTask){const t=next.task.find(x=>x.id===fromTask);if(t){t.completedCycle=taskCycle(t);t.completedAt=new Date().toISOString()}}
- if(persist(next,(r.id?'编辑':'新增')+names[k]+' · '+title(k,item)))d.close()};guardEditor(d,()=>JSON.stringify(readValues()));d.showModal()}
+ if(persist(next,(r.id?'编辑':'新增')+names[k]+' · '+title(k,item)))d.close()};guardEditor(d,()=>JSON.stringify(readValues()));openModal(d,opener)}
 function confirmDeletion(kind,record){
  const rowIndex=Array.from(document.querySelectorAll('#rows article')).indexOf(document.activeElement?.closest('article'));
  const dialog=$('#delete-client'),cancel=$('#delete-cancel'),remove=$('#delete-confirm'),status=$('#delete-error');
@@ -1922,7 +1988,7 @@ function confirmDeletion(kind,record){
    if(persist(next,task?"删除跟进事项 · "+title("task",record):"删除客户 · "+record.姓名)){dialog.close();const rows=document.querySelectorAll('#rows article');(rows[Math.min(rows.length-1,Math.max(0,rowIndex))]?.querySelector('button')||$('#add')).focus()}
    else status.textContent='未能保存删除操作，请检查浏览器存储权限后重试。';
  };
- dialog.showModal();cancel.focus();
+ openModal(dialog);cancel.focus();
 }
 
 const cachedAddresses=new WeakMap();
@@ -1978,7 +2044,7 @@ function clientListing(r,row){
    node('dd',r[key],field);
  }
  if(!list.children.length)node('p','暂无其他资料。',details);
- const k='client',actions=node('div',null,details);actions.className='actions';button('编辑',()=>editor(k,r),actions);
+ const k='client',actions=node('div',null,details);actions.className='actions';button('编辑',event=>editor(k,r,null,null,event.currentTarget),actions);
  if(r.cycleConflict)button('待确认',e=>resolveCycle(r.id,e.currentTarget),actions);
  button(r.archived?"撤销已成交":"标记为已成交",()=>{const next=copy();next.client.find(x=>x.id===r.id).archived=!r.archived;persist(next,(r.archived?"撤销已成交":"标记为已成交")+'客户 · '+r.姓名)},actions);
  button("删除",()=>confirmDeletion("client",r),actions)}
@@ -2178,7 +2244,7 @@ const row=node("article",null,group);row.dataset.rowId=r.id;if(k==="task")row.cl
  const meta=node('small',null,body);meta.className='workbench-meeting-meta';
  node('span',client(r.客户)||'—',meta);meta.append(workbenchScheduleSummary(r));
  const details=[r.地点,r.目的,r.状态].filter(Boolean).join(' · ');if(details)node('small',details,body).className='schedule-location';
-}else {node("small",infoFor(k,r),body);if(k==="meet")node("small",scheduleTimeText(r),body)}}const actions=node("div",null,actionHost);actions.className='actions';const ownerId=k==='client'?r.id:r.客户;if((k==='client'&&r.cycleConflict)||(k==='task'&&taskCycle(r)==='待确认'))button('待确认',e=>resolveCycle(ownerId,e.currentTarget),actions);button('编辑',()=>editor(k,r),actions);
+}else {node("small",infoFor(k,r),body);if(k==="meet")node("small",scheduleTimeText(r),body)}}const actions=node("div",null,actionHost);actions.className='actions';const ownerId=k==='client'?r.id:r.客户;if((k==='client'&&r.cycleConflict)||(k==='task'&&taskCycle(r)==='待确认'))button('待确认',e=>resolveCycle(ownerId,e.currentTarget),actions);button('编辑',event=>editor(k,r,null,null,event.currentTarget),actions);
  if(k==="task")button("删除",()=>confirmDeletion("task",r),actions);
 }
  if((page==='client'||page==='task')&&count>192){
@@ -2269,7 +2335,7 @@ function render(){document.body.dataset.page=page;document.body.classList.toggle
    if(document.fonts)document.fonts.ready.then(positionGlass);
  }
  markNav(page);
- $('h1').textContent=names[page];renderStageHelpEntry();renderPageActions();const add=$('#add'),k=page==='home'?'client':page;add.hidden=!schema[k];add.textContent='＋ 新增'+names[k];add.onclick=()=>editor(k);
+ $('h1').textContent=names[page];renderStageHelpEntry();renderPageActions();const add=$('#add'),k=page==='home'?'client':page;add.hidden=!schema[k];add.textContent='＋ 新增'+names[k];add.onclick=event=>editor(k,{},null,null,event.currentTarget);
  const metrics=$('#metrics');metrics.replaceChildren();metrics.className=page==='home'?'metrics':'';if(page==='home')for(const [label,num] of [['客户数量',state.client.length],['待跟进事项',state.task.filter(isPendingTask).length]]){const m=node('div',label,metrics);m.className='metric';node('b',String(num),m)}
  renderClientTools();const bar=$('#filters');bar.replaceChildren();if(schema[page]){const wrap=node('div',null,bar);wrap.className='search-field';const q=node('input',null,wrap);q.id='search';q.type='search';q.placeholder='搜索'+names[page];q.setAttribute('aria-label',q.placeholder);q.value=query;const clear=button('×',()=>{q.value='';q.oninput();q.focus()},wrap);clear.className='clear-query';clear.hidden=!query;clear.setAttribute('aria-label','清空关键词');let pending=0;q.oninput=()=>{query=q.value;clear.hidden=!query;cancelAnimationFrame(pending);pending=requestAnimationFrame(()=>{if(q.isConnected)drawRows()})};const opts=page==='meet'?choices.meet:null;if(opts){const s=node('select',null,bar);s.setAttribute('aria-label','状态筛选');s.add(new Option(page==='client'?'未成交':'全部状态',''));for(const v of opts)s.add(new Option(v,v));s.value=filter;s.onchange=()=>{filter=s.value;drawRows()}}}drawRows()}
 if(window.visualViewport){
