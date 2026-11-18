@@ -709,6 +709,20 @@ dialog.stage-help-dialog::backdrop{background:rgba(0,0,0,.32);backdrop-filter:no
 @media(prefers-reduced-motion:reduce){.stage-help-dialog-head button{transition:none}}
 .trial-banner{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:6px 12px;margin-block:8px;padding:8px 12px;border:1px solid var(--appearance-border,currentColor);border-radius:10px;font-size:14px}
 .trial-banner button{min-height:44px}
+@media (hover:none) and (pointer:coarse){
+ #rows :is(.client-name,.actions button){touch-action:manipulation}
+ #rows .record-hover::before,#rows .record-hover::after{display:none}
+ dialog[data-editor][open],dialog[data-editor]::backdrop,
+ dialog[data-editor] :is(.gender-menu,.task-calendar,.birthday-panel,.phone-menu,.client-search-panel,.schedule-time-panel){
+  -webkit-backdrop-filter:none!important;backdrop-filter:none!important
+ }
+ dialog[data-editor][open]{background:var(--appearance-surface,#fafafa)}
+ #rows .actions button{transition-property:transform}
+}
+@media (hover:none) and (pointer:coarse) and (prefers-reduced-motion:no-preference){
+ dialog[data-editor][open],#rows .client-more:not([hidden]){animation:trial-touch-enter .14s ease-out}
+ @keyframes trial-touch-enter{from{transform:translateY(4px);opacity:.75}to{transform:translateY(0);opacity:1}}
+}
 </style>
 
 <aside><header class="studio-brand"><div class="monogram" role="img" aria-label="C 与 H"><span class="signature">C<i>&amp;</i>H</span></div></header><nav></nav></aside><main><div class="trial-banner"><span>测试版，请勿录入真实客户资料</span><button type="button" id="reset-trial">恢复样例</button></div><div class="studio-clock"><time id="studio-clock" aria-label="当前日期"></time></div><div class="bar"><h1></h1><button id="add" class="primary"></button></div><div id="client-tools" hidden></div><div id="metrics"></div><section class="panel"><div id="filters"></div><div id="rows"></div></section></main><dialog aria-labelledby="editor-title"><form><h2 id="editor-title"></h2><div id="fields"></div><div class="actions"><button type="button" id="close">取消</button><button class="primary">保存</button></div></form></dialog><dialog id="delete-client" aria-labelledby="delete-heading" aria-describedby="delete-description"><h2 id="delete-heading">请确认是否删除客户</h2><p id="delete-description"></p><p id="delete-error" role="alert"></p><div class="actions"><button id="delete-cancel" type="button" autofocus>取消</button><button id="delete-confirm" type="button">确认删除</button></div></dialog><dialog id="studio-notice" aria-labelledby="notice-message"><p id="notice-message"></p><form method="dialog"><button autofocus>好</button></form></dialog><dialog id="discard-editor" aria-labelledby="discard-heading" aria-describedby="discard-message"><h2 id="discard-heading">放弃未保存的更改？</h2><p id="discard-message">放弃后，本次编辑的内容将不会保存。</p><form method="dialog" class="actions"><button autofocus>继续编辑</button><button type="button" data-discard>放弃更改</button></form></dialog><script>
@@ -1789,17 +1803,12 @@ function editor(k,r={},fromTask=null,referrer=null){if(k!=='client'&&!state.clie
  if(r[f]!=null)input.value=r[f];else if(f==='日期')input.value=today();input.required=[schema[k][0],'客户','日期'].includes(f)}
  let timeRange=null;
  if(k==='meet'||k==='task'){
-  if(k==='meet'){controls.时间.parentElement.remove();controls.结束时间.parentElement.remove();delete controls.时间;delete controls.结束时间;taskCalendar(controls.日期)}
+  if(k==='meet'){controls.时间.parentElement.remove();controls.结束时间.parentElement.remove();delete controls.时间;delete controls.结束时间}
   const host=node('div');host.className='schedule-time-host';controls.日期.parentElement.after(host);
   timeRange=timeRangeEditor(host,r);
  }
- if(k==='meet'||k==='task'){
- const label=node('label','日历提醒',fields),select=node('select',null,label);controls.日历提醒=select;
- for(const [v,t] of Object.entries(reminderLabels))select.add(new Option(t,v));
- select.value=r.日历提醒||'both';glassChoiceMenu(select,'日历提醒');
- }
  if(k==="client"){const pair=node("div");pair.className="identity-row";fields.prepend(pair);pair.append(controls.姓名.parentElement,controls.性别.parentElement,controls.年龄.parentElement);glassChoiceMenu(controls.性别,"性别");groupClientDetails(controls)}
- if(k==="task"||k==="log")taskCalendar(controls.日期);
+ if(k==="task"||k==="log"||k==="meet")taskCalendar(controls.日期);
  const writeIncome=k==="client"?incomeEditor(controls.年收入,r):null;
  const writeBirth=k==="client"?birthEditor(controls,r):null;
  const readPhone=k==="client"?phoneEditor(controls.电话,r):null;
@@ -2227,9 +2236,15 @@ function render(){document.body.dataset.page=page;document.body.classList.toggle
  renderClientTools();const bar=$('#filters');bar.replaceChildren();if(schema[page]){const wrap=node('div',null,bar);wrap.className='search-field';const q=node('input',null,wrap);q.id='search';q.type='search';q.placeholder='搜索'+names[page];q.setAttribute('aria-label',q.placeholder);q.value=query;const clear=button('×',()=>{q.value='';q.oninput();q.focus()},wrap);clear.className='clear-query';clear.hidden=!query;clear.setAttribute('aria-label','清空关键词');let pending=0;q.oninput=()=>{query=q.value;clear.hidden=!query;cancelAnimationFrame(pending);pending=requestAnimationFrame(()=>{if(q.isConnected)drawRows()})};const opts=page==='meet'?choices.meet:null;if(opts){const s=node('select',null,bar);s.setAttribute('aria-label','状态筛选');s.add(new Option(page==='client'?'未成交':'全部状态',''));for(const v of opts)s.add(new Option(v,v));s.value=filter;s.onchange=()=>{filter=s.value;drawRows()}}}drawRows()}
 if(window.visualViewport){
  const viewport=window.visualViewport;
+ let viewportFrame=0,lastHeight='',lastTop='';
  function sizeEditor(){
-   document.documentElement.style.setProperty('--visible-height',viewport.height+'px');
-   document.documentElement.style.setProperty('--visible-top',viewport.offsetTop+'px');
+   if(viewportFrame)return;
+   viewportFrame=requestAnimationFrame(()=>{
+     viewportFrame=0;
+     const height=viewport.height+'px',top=viewport.offsetTop+'px';
+     if(height!==lastHeight)document.documentElement.style.setProperty('--visible-height',lastHeight=height);
+     if(top!==lastTop)document.documentElement.style.setProperty('--visible-top',lastTop=top);
+   });
  }
  viewport.addEventListener('resize',sizeEditor);viewport.addEventListener('scroll',sizeEditor);sizeEditor();
 }
