@@ -1,4 +1,5 @@
-<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="color-scheme" content="light dark"><title>C&H · 客户工作室</title><style>
+<!doctype html>
+<!-- Private UI baseline: 24b8467fd6ae1fee5cf75d71db551b19d88c3f3a --><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="color-scheme" content="light dark"><title>C&H · 客户工作室</title><style>
 *{box-sizing:border-box}body{margin:0;background:var(--appearance-canvas, #f6f6f6);color:var(--appearance-text, black);font:15px/1.6 Arial,"Songti SC",STSong,SimSun,serif}aside{position:fixed;inset:0 auto 0 0;width:210px;background:var(--appearance-surface, white);padding:32px 18px;border-right:1px solid var(--appearance-line, #dedede)}header{display:flex;gap:12px;align-items:center;margin-bottom:36px}header b{border:1px solid var(--appearance-focus, #333333);border-radius:10px 10px 18px;padding:0 12px;font-size:34px}header strong{font-size:24px}small{display:block}button,input,select,textarea{font:inherit;color:var(--appearance-text, black)}button{cursor:pointer;border:1px solid var(--appearance-line, #dedede);background:var(--appearance-surface, white);border-radius:9px;padding:8px 12px}button:hover{background:var(--appearance-control, #f2f2f2)}nav button{display:block;border:0;width:100%;text-align:left;margin:3px 0;background:transparent}nav .active{font-weight:600}main{margin-left:210px;padding:5vh 4vw;max-width:1450px}h1{font-size:36px;margin:0}h2{font-size:19px}.bar,article{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}.primary{border-color:var(--appearance-focus, #333333)}.panel,.metric,dialog{border:1px solid var(--appearance-line, #dedede);border-radius:16px;background:var(--appearance-surface, white);padding:22px}.panel{margin:20px 0}.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:20px}.metric b{display:block;font-size:30px}article{border-top:1px solid var(--appearance-line, #dedede);padding:14px 0}article div:first-child{flex:1;min-width:160px;overflow-wrap:anywhere}input,select,textarea{padding:9px;border:1px solid var(--appearance-line, #bfbfbf);border-radius:8px;width:100%;background:var(--appearance-surface, white)}input::placeholder,textarea::placeholder{color:var(--appearance-text, black);opacity:1}label{display:block;margin:10px 0}dialog{width:min(460px,94vw);max-height:85vh}dialog::backdrop{background:var(--appearance-scrim, #00000066)}.actions{display:flex;gap:5px;flex-wrap:wrap}:focus-visible{outline:3px solid var(--appearance-focus, #555555);outline-offset:2px}@media(max-width:750px){aside{position:static;width:auto;padding:12px}header{margin-bottom:8px}nav{display:flex;overflow:auto}nav button{width:auto;white-space:nowrap}main{margin:0;padding:16px}.metric{padding:10px}.metrics{gap:6px}}
 nav{position:relative;isolation:isolate;background:linear-gradient(145deg,var(--appearance-control, #f8f8f8),var(--appearance-surface, #fff));border-radius:12px}nav button{position:relative;z-index:1}nav button.active,nav button.active:hover{background:transparent;box-shadow:none;color:var(--appearance-text, black)}.glass{position:absolute;pointer-events:none;z-index:0;border-radius:10px;border:1px solid var(--appearance-line, rgba(84,84,84,.16));background:linear-gradient(120deg,var(--appearance-glass, rgba(255,255,255,.97)),var(--appearance-glass, rgba(255,255,255,.76)));-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);box-shadow:inset 1px 1px 2px var(--appearance-highlight, white),inset 0 -2px 3px var(--appearance-highlight, rgba(60,60,60,.07)),0 2px 5px var(--appearance-highlight, rgba(40,40,40,.10))}.glass:before{content:"";position:absolute;left:1px;top:23%;height:54%;width:3px;background:var(--appearance-focus, #333333);border-radius:3px}.glass.ready{transition:transform .44s cubic-bezier(.2,1.17,.32,1),width .36s ease,height .36s ease}@media(prefers-reduced-motion:reduce){.glass.ready{transition:none}}:root{color-scheme:light dark;accent-color:var(--appearance-focus, #333)}::selection{background:var(--appearance-focus, #333);color:var(--appearance-inverse, white)}input::-webkit-search-cancel-button{filter:grayscale(1)}nav{background:linear-gradient(120deg,var(--appearance-hover, #ebebeb),var(--appearance-canvas, #f6f6f6));padding:4px}.glass,.glass.ready{transition:none;border-radius:13px;border:1px solid var(--appearance-line, #ccc);background:linear-gradient(165deg,var(--appearance-surface, #fff) 5%,var(--appearance-glass, rgba(255,255,255,.89)) 62%,var(--appearance-hover, #eee));box-shadow:inset 0 2px 2px var(--appearance-highlight, white),inset 0 -2px 3px var(--appearance-line, #ddd),0 2px 5px #0002;will-change:transform}.glass:before{left:3px}.search-field{position:relative;margin-bottom:16px}.search-field input{height:38px;border:1px solid var(--appearance-line, rgba(0,0,0,.09));border-radius:10px;background:linear-gradient(var(--appearance-control, #f2f2f2),var(--appearance-control, #f7f7f7));box-shadow:inset 0 1px 2px #00000008;padding:0 12px 0 36px;-webkit-appearance:none;appearance:none}.search-field input:focus{outline:2px solid var(--appearance-focus, #777);outline-offset:2px;background:var(--appearance-surface, white)}.search-field:before,.search-field:after{content:"";position:absolute;pointer-events:none;z-index:1}.search-field:before{width:11px;height:11px;box-sizing:border-box;border:1.6px solid var(--appearance-focus, #555);border-radius:50%;top:12px;left:13px}.search-field:after{width:7px;height:1.6px;background:var(--appearance-focus, #555);left:21px;top:23px;transform:rotate(45deg);border-radius:1px}.studio-brand{align-items:flex-start;flex-direction:column;gap:1px;padding:4px 10px}.monogram{display:inline-flex;align-items:baseline;color:var(--appearance-text, black);font-family:Arial,"Songti SC",STSong,SimSun,serif;font-size:48px;line-height:1;letter-spacing:-.065em}.monogram i{align-self:center;font-size:.47em;line-height:1;font-weight:400;letter-spacing:0;margin:0 .04em 0 .08em}.studio-brand small{font-size:12px;letter-spacing:.28em;color:var(--appearance-text, black);margin:5px 0 0 2px}@media(max-width:750px){.studio-brand{flex-direction:row;align-items:center;gap:14px}.monogram{font-size:34px}.studio-brand small{margin:0}}.studio-brand .monogram{position:relative;isolation:isolate;align-items:baseline;padding:6px 12px 8px 10px;border:1px solid var(--appearance-line, rgba(0,0,0,.18));border-radius:16px;background:linear-gradient(155deg,var(--appearance-glass, rgba(255,255,255,.98)) 15%,var(--appearance-glass, rgba(247,247,247,.93)) 65%,var(--appearance-glass, rgba(234,234,234,.91)));-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);box-shadow:inset 0 1px 0 var(--appearance-highlight, white),inset 0 -1px 2px rgba(0,0,0,.06),0 2px 4px rgba(0,0,0,.07)}.studio-brand .monogram::before{content:"";position:absolute;inset:1px;border:1px solid var(--appearance-line, rgba(255,255,255,.8));border-radius:14px;pointer-events:none}@media(max-width:750px){.studio-brand .monogram{padding:4px 9px 5px 8px;border-radius:12px}.studio-brand .monogram::before{border-radius:10px}}.studio-brand .monogram{overflow:hidden;color:var(--appearance-inverse, white);border-color:var(--appearance-line, #a02641);background:linear-gradient(145deg,var(--appearance-control, #a62944),var(--appearance-control, #801d35) 65%,var(--appearance-control, #69152a));box-shadow:inset 0 1px 0 var(--appearance-highlight, #ffffff33),0 2px 4px var(--appearance-highlight, #40101d22);transition:transform .2s ease,box-shadow .2s ease}.studio-brand .monogram::before{border-color:var(--appearance-line, #ffffff30)}.studio-brand .monogram::after{content:"";position:absolute;inset:-30% -60%;pointer-events:none;background:linear-gradient(105deg,transparent 40%,var(--appearance-glass, #ffffff33) 50%,transparent 60%);transform:translateX(-90%)}@media(hover:hover) and (pointer:fine){.studio-brand .monogram:hover{transform:translateY(-2px);box-shadow:inset 0 1px 0 var(--appearance-highlight, #ffffff44),0 5px 10px var(--appearance-highlight, #48132233)}}@media(prefers-reduced-motion:reduce){.studio-brand .monogram{transition:none}.studio-brand .monogram:hover{transform:none}.studio-brand .monogram:hover::after{animation:none}}body.home main{max-width:1480px;padding-top:clamp(26px,5vw,64px)}
 main>.bar{margin-bottom:26px}main h1{font-size:clamp(28px,3vw,40px);line-height:1.2}
@@ -425,7 +426,15 @@ dialog .phone-block .phone-trigger,.client-details summary{min-height:44px}
 dialog[data-editor="client"] #fields .income-row .income-caption{display:block;font-size:11px;width:fit-content;max-width:100%;margin-top:3px;padding:1px 4px;border:1px solid var(--appearance-line, #d7d7da);border-radius:5px;background:var(--appearance-hover, #efeff1);color:var(--appearance-secondary, #535359);line-height:1.4;font-weight:500;white-space:nowrap}
 .client-name .stage-badge{grid-column:1/-1;display:inline-flex;align-items:center;gap:4px;max-width:100%;white-space:normal;text-align:left;color:var(--appearance-text, #303035);font:500 11px/1.4 -apple-system,BlinkMacSystemFont,sans-serif}
 .stage-badge:before{content:'';width:7px;height:7px;flex:none;border-radius:50%;background:var(--stage-color)}
-body[data-page=client] #rows article.client-listing.stage-emphasis{border-inline-start:3px solid var(--stage-color)!important}
+.client-name .stage-badge{overflow-wrap:anywhere}
+.task-stage-badge{display:inline-flex;align-items:center;gap:4px;max-width:100%;white-space:normal;overflow-wrap:anywhere;vertical-align:top}
+.stage-badge:before{content:'';width:7px;height:7px;flex:none;border-radius:50%;background:var(--stage-color)}
+body[data-page=client] #rows article.client-listing.stage-emphasis{border-inline-start:3px solid transparent!important}
+body[data-page=client] #rows article.client-listing.stage-emphasis::after{border-inline-start:3px solid var(--stage-color);opacity:1}
+@media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
+ #rows .client-listing{transition:transform .16s ease-out}
+ #rows .client-listing:hover{transform:translateY(-2px)}
+}
 .stage-emphasis .stage-badge{padding:2px 6px;border-radius:7px;background:var(--appearance-hover, #eee);background:color-mix(in srgb,var(--stage-color) 15%,var(--appearance-surface, white))}
 .cycle-field .gender-menu{max-height:min(16rem,36dvh);overflow:auto;overscroll-behavior:contain}
 .cycle-group,.cycle-help section{display:block;padding:6px 10px;text-align:left}
@@ -782,6 +791,57 @@ dialog[data-editor]:has(.schedule-time-sheet[open]) #fields{overflow:hidden}
  dialog.schedule-time-sheet[open]{animation:schedule-sheet-in .18s ease-out}
  @keyframes schedule-sheet-in{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 }
+@media(min-width:751px){body[data-page="home"] main>.bar{max-width:calc(1450px - 8vw)}}
+body[data-page="home"] .page-actions{display:grid;grid-template-columns:repeat(3,minmax(0,max-content))}
+body[data-page="home"] .page-actions #add{grid-column:3}
+@media(max-width:600px){
+ body[data-page="home"] .page-actions{width:100%;margin-inline-start:0;grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+#quick-client-entry label{margin-block:0 12px;font-weight:600}
+#quick-client-entry textarea{display:block;margin-top:6px;min-height:84px;max-height:40dvh;resize:vertical;font-weight:400}
+#quick-client-entry .actions{justify-content:flex-end;flex-wrap:wrap;gap:10px;padding:2px}
+#quick-client-entry .actions button{max-width:100%;overflow-wrap:anywhere}
+#quick-client-entry .actions button:disabled{opacity:.48;cursor:default}
+#quick-client-entry .actions button:focus-visible{outline:2px solid var(--appearance-focus,#555);outline-offset:2px}
+@media(prefers-reduced-transparency:reduce){
+ #quick-client-entry .actions button{background:var(--appearance-surface,#fff);-webkit-backdrop-filter:none;backdrop-filter:none}
+ #quick-client-entry .actions button.primary{background:var(--appearance-selected,#e2e7ee)}
+}
+ .quick-client-review{grid-column:1/-1;min-width:0;border:1px solid var(--material-edge,var(--appearance-line,#ccc));border-radius:14px;background:var(--appearance-glass,#f7f8fcdf);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.quick-review-trigger{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;min-height:44px;text-align:start;border:0;border-radius:13px;background:transparent;color:inherit;font-weight:600}
+.quick-review-trigger:focus-visible{outline:2px solid var(--appearance-focus,#555);outline-offset:2px}
+.quick-review-arrow{width:8px;height:8px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg);margin-inline-end:4px;flex:none}
+.quick-review-trigger[aria-expanded="true"] .quick-review-arrow{transform:rotate(225deg)}
+.quick-review-content{display:grid;gap:8px;padding:0 10px 10px;min-width:0}
+.quick-review-section{border-radius:10px;padding:10px 12px;min-width:0}
+.quick-review-original{background:var(--appearance-control,#edf0f4)}
+.quick-review-pending{background:#fff1d3;color:#60420c}
+.quick-review-footer{margin-top:10px;padding-top:8px;border-top:1px solid var(--appearance-line,#ddd)}
+.quick-review-section h3{font-size:inherit;margin:0 0 4px}
+.quick-review-section p,.quick-review-section li{margin:0;white-space:pre-wrap;overflow-wrap:anywhere}
+.quick-review-section ul{margin:0;padding-inline-start:1.25em}
+.quick-review-section li+li{margin-top:6px}
+.quick-review-pending ul{list-style:none;padding:0}
+.quick-review-pending li+li{border-top:1px solid var(--appearance-line,#ddd);padding-top:6px}
+@media(prefers-color-scheme:dark){.quick-review-pending{background:#45361d;color:#ffe2a2}}
+@media(prefers-reduced-transparency:reduce){.quick-client-review{background:var(--appearance-surface,#fff);backdrop-filter:none;-webkit-backdrop-filter:none}}
+@media(prefers-reduced-motion:no-preference){.quick-review-arrow{transition:transform .16s ease-out}}
+dialog[data-editor=client] #fields .address-control>button{white-space:normal;overflow-wrap:anywhere;height:auto;min-height:44px}
+dialog[data-editor="client"] #fields .birth-group :is(.client-age,.birthday-trigger){padding-inline:4px;min-width:0}
+.backup-feedback:not(:empty){margin-block-start:12px}
+.identity-row .birth-group{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+.identity-row .birth-group>span{grid-row:1;grid-column:1/-1}.identity-row .birth-group>.client-age{grid-row:2;grid-column:1;padding-inline:4px}.identity-row .birthday-trigger{grid-row:2;grid-column:2;min-width:0;padding-inline:4px}.identity-row .birth-group>small{grid-row:3}
+dialog:is([data-editor="client"],[data-editor="task"],[data-editor="log"]) form>.actions>button,dialog[data-quick-client] .actions>button{box-sizing:border-box;min-width:76px;min-height:44px;padding:8px 18px;border:1px solid var(--appearance-line, #ccc);border-radius:12px;font:inherit;font-size:16px;color:var(--appearance-text, #111);background:linear-gradient(155deg,var(--appearance-glass, #ffffffeb),var(--appearance-glass, #eeeeeedb));-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:inset 0 1px var(--appearance-highlight, #fff9),0 1px 3px #0001}
+dialog:is([data-editor="client"],[data-editor="task"],[data-editor="log"]) form>.actions>button.primary,dialog[data-quick-client] .actions>button.primary{font-weight:600;color:var(--appearance-text, #000);background:linear-gradient(155deg,var(--appearance-glass, #efefeff2),var(--appearance-glass, #dcdcdce6));border-color:var(--appearance-line, #aaa)}
+#rows article.task-record>.task-body>.task-notes{grid-column:1/-1;grid-row:3;display:grid;gap:4px;min-width:0}
+.task-notes>small{min-width:0;margin:0;white-space:pre-wrap;overflow-wrap:anywhere}
+@media(hover:hover) and (pointer:fine){
+ #quick-client-entry .actions button:not(:disabled):hover{border-color:var(--appearance-focus,#777)}
+}
+@media(prefers-reduced-motion:no-preference){
+ #quick-client-entry .actions button{transition:transform .16s ease-out}
+ #quick-client-entry .actions button:not(:disabled):active{transform:scale(.96)}
+}
 </style>
 
 <aside><header class="studio-brand"><div class="monogram" role="img" aria-label="C 与 H"><span class="signature">C<i>&amp;</i>H</span></div></header><nav></nav></aside><main><div class="trial-banner"><span>测试版，请勿录入真实客户资料</span><button type="button" id="reset-trial">恢复样例</button></div><div class="studio-clock"><time id="studio-clock" aria-label="当前日期"></time></div><div class="bar"><h1></h1><button id="add" class="primary"></button></div><div id="client-tools" hidden></div><div id="metrics"></div><section class="panel"><div id="filters"></div><div id="rows"></div></section></main><dialog aria-labelledby="editor-title"><form><h2 id="editor-title"></h2><div id="fields"></div><div class="actions"><button type="button" id="close">取消</button><button class="primary">保存</button></div></form></dialog><dialog id="delete-client" aria-labelledby="delete-heading" aria-describedby="delete-description"><h2 id="delete-heading">请确认是否删除客户</h2><p id="delete-description"></p><p id="delete-error" role="alert"></p><div class="actions"><button id="delete-cancel" type="button" autofocus>取消</button><button id="delete-confirm" type="button">确认删除</button></div></dialog><dialog id="studio-notice" aria-labelledby="notice-message"><p id="notice-message"></p><form method="dialog"><button autofocus>好</button></form></dialog><dialog id="discard-editor" aria-labelledby="discard-heading" aria-describedby="discard-message"><h2 id="discard-heading">放弃未保存的更改？</h2><p id="discard-message">放弃后，本次编辑的内容将不会保存。</p><form method="dialog" class="actions"><button autofocus>继续编辑</button><button type="button" data-discard>放弃更改</button></form></dialog><script>
@@ -813,7 +873,8 @@ function stepNumber(label){return Math.max(oldSteps.indexOf(label),choices.task.
 function stageOf(step){return stages.find(stage=>stage[2].includes(choices.task[step-1]))}
 function openCycle(t){return !t.completedAt&&(stepNumber(t.状态)>0||['待跟进','待设置'].includes(t.状态))}
 function stepLabel(step){return choices.task[step-1]||'待设置'}
-function customerStage(c){return c?.cycleConflict?'待确认':stageOf(c?.salesStep)?.[0]||'待设置'}
+function customerCycle(c){return c?.cycleConflict?'待确认':stepLabel(c?.salesStep)}
+function customerStageColor(c){return (!c?.cycleConflict&&stageOf(c?.salesStep)?.[1])||'#888'}
 let indexedClients,clientsById;
 function lookupClient(id){
  if(indexedClients!==state.client){
@@ -821,10 +882,7 @@ function lookupClient(id){
  }
  return clientsById.get(String(id));
 }
-function taskCycle(t){
- const c=lookupClient(t.客户);
- return c?.cycleConflict?'待确认':stepLabel(c?.salesStep);
-}
+function taskCycle(t){return customerCycle(lookupClient(t.客户))}
 function fitCycles(data){
  const evidence=new Map();
  for(const t of data.task){
@@ -874,6 +932,11 @@ function resolveCycle(id,origin){
  openModal(dialog);
 }
 let page='home', query='', filter='', state={client:[],deal:[],task:[],log:[],meet:[],history:[]}, locked=false;
+const trialSampleNames=new Map([
+ ['sample-a',{previous:'样例客户·青禾',current:'沈若衡'}],
+ ['sample-b',{previous:'样例客户·晴川',current:'程思宁'}],
+ ['sample-c',{previous:'样例客户·云帆',current:'许清遥'}],
+]);
 function normalizeStore(raw){
  const parsed=JSON.parse(raw);
  if(!parsed||typeof parsed!=='object'||!Array.isArray(parsed.client))throw Error('invalid client store');
@@ -888,15 +951,19 @@ function normalizeStore(raw){
      }
    }
  }
+ for(const client of parsed.client){
+   const sample=trialSampleNames.get(client.id);
+   if(sample&&client.姓名===sample.previous)client.姓名=sample.current;
+ }
  fitCycles(parsed);return parsed;
 }
 function sampleStore(){
  const date=today();
  return {
    client:[
-     {id:'sample-a',姓名:'样例客户·青禾',城市:'广州',salesStep:2,cycleVersion:1,备注:'虚构资料，用于试填需求。'},
-     {id:'sample-b',姓名:'样例客户·晴川',城市:'深圳',salesStep:5,cycleVersion:1},
-     {id:'sample-c',姓名:'样例客户·云帆',城市:'上海',salesStep:10,cycleVersion:1}
+     {id:'sample-a',姓名:trialSampleNames.get('sample-a').current,城市:'广州',salesStep:2,cycleVersion:1,备注:'虚构资料，用于试填需求。'},
+     {id:'sample-b',姓名:trialSampleNames.get('sample-b').current,城市:'深圳',salesStep:5,cycleVersion:1},
+     {id:'sample-c',姓名:trialSampleNames.get('sample-c').current,城市:'上海',salesStep:10,cycleVersion:1}
    ],
    task:[
      {id:'sample-task-a',事项:'确认需求与沟通时间',客户:'sample-a',日期:date,状态:stepLabel(2)},
@@ -1027,10 +1094,9 @@ async function buildClientExcel(clients){
   reserved.add(nameKey(label));
   return label;
  });
- let wonDifferences=0,referralIssues=0;
+ let referralIssues=0;
  const mapped=clients.map((c,index)=>{
   const fields=excelClientFields(c);
-  if(!c.archived&&c.姓名&&fields.B===excelCycle(10))wonDifferences++;
   let source='',issue='';
   if(c.referrerId!=null&&c.referrerId!==''){
    const owner=ids.get(String(c.referrerId));
@@ -1071,7 +1137,7 @@ async function buildClientExcel(clients){
  const info=await zip.file(guide).async('string');
  zip.file(guide,excelCell(info,'','A2','普通 XLSX · 桌面 Excel 2021／Microsoft 365 及以上 · '+capacity+' 个录入位 · 新增时间为北京时间（UTC+8）'));
  const bytes=await zip.generateAsync({type:'uint8array',compression:'DEFLATE'});
- return {bytes,wonDifferences,referralIssues};
+ return {bytes,referralIssues};
 }
 function downloadClientExcel(blob,filename){
  const url=URL.createObjectURL(blob);
@@ -1101,7 +1167,6 @@ async function exportClientExcel(trigger,feedback){
   if(savedVersion!==version)throw Error('客户资料已更新，请重新导出。');
   downloadClientExcel(new Blob([result.bytes],{type:excelType}),'客户工作室-'+today()+'.xlsx');
   feedback.textContent='Excel 文件已生成，共 '+clients.length+' 位客户。'
-   +(result.wonDifferences?' 第 10 步规则使 '+result.wonDifferences+' 位客户在 Excel 中显示为已成交。':'')
    +(result.referralIssues?' '+result.referralIssues+' 条转介关系请在「转介设置」核对。':'');
  }catch(error){
   feedback.textContent=error.message?.startsWith('客户')||error.message?.startsWith('其他窗口')||error.message?.startsWith('有一项')?error.message:'Excel 生成失败，请重试。';
@@ -1482,14 +1547,15 @@ function addressOptions(region,data){
  return {};
 }
 
-function regionFields(controls,container){
- const country=controls.国家或地区,original=country.value;
- const regions={
+const clientRegionFields={
   '中国内地':['省或直辖市','北京 天津 河北 山西 内蒙古 辽宁 吉林 黑龙江 上海 江苏 浙江 安徽 福建 江西 山东 河南 湖北 湖南 广东 广西 海南 重庆 四川 贵州 云南 西藏 陕西 甘肃 青海 宁夏 新疆'],
   '中国香港':['区或县','中西区 湾仔区 东区 南区 油尖旺区 深水埗区 九龙城区 黄大仙区 观塘区 葵青区 荃湾区 屯门区 元朗区 北区 大埔区 沙田区 西贡区 离岛区'],
   '中国澳门':['区或县','花地玛堂区 圣安多尼堂区 望德堂区 大堂区 风顺堂区 嘉模堂区 圣方济各堂区 路氹城'],
   '中国台湾':['城市','台北市 新北市 桃园市 台中市 台南市 高雄市 基隆市 新竹市 嘉义市 新竹县 苗栗县 彰化县 南投县 云林县 嘉义县 屏东县 宜兰县 花莲县 台东县 澎湖县 金门县 连江县']
- };
+ };;
+function regionFields(controls,container,onAddressChange){
+ const country=controls.国家或地区,original=country.value;
+ const regions=clientRegionFields;
  const field=country.parentElement,mode=node('select');mode.setAttribute('aria-label','国家或地区');
  field.before(mode);const modeLabel=node('label','国家或地区');mode.replaceWith(modeLabel);modeLabel.append(mode);
  for(const name of ['',...Object.keys(regions),'外国'])mode.add(new Option(name||'请选择',name));
@@ -1517,6 +1583,7 @@ function regionFields(controls,container){
    if(key==='国家或地区')label.firstChild.nodeValue='国家名称';
   }
   let after=anchor;for(const key of ["省或直辖市","城市","区或县"]){if(!Object.hasOwn(options,key))continue;const label=labels.get(key),select=controls[key];after.after(label);const wrap=glassChoiceMenu(select,key);menus.push({wrap,label,select});after=wrap;wrap.querySelector("button").disabled=select.options.length===1;if(key!=="区或县")select.onchange=()=>{const draft=read();draft.区或县="";if(key==="省或直辖市")draft.城市="";render(draft);menus.find(m=>m.select===controls[key])?.wrap.querySelector("button")?.focus();};}
+  onAddressChange?.();
  }
  const data=read();mode.value=initial;
  if(!initial&&addressParts.slice(1).some(k=>data[k])){current='中国内地';mode.value=current}
@@ -1537,7 +1604,16 @@ function groupClientDetails(controls){
  const addressFields=node('div',null,address);addressFields.className="address-fields";addressFields.hidden=true;
 
  for(const key of addressParts)addressFields.append(controls[key].parentElement);
- addressButton.addEventListener('click',()=>regionFields(controls,addressFields),{once:true});
+ function updateAddressSummary(){
+  const record=Object.fromEntries(addressParts.map(key=>[key,controls[key].value]));
+  const city=clientAddress(record).city;
+  addressButton.textContent=city;
+  addressButton.setAttribute('aria-label',city?'地址，'+city:'地址');
+ }
+ updateAddressSummary();
+ addressFields.addEventListener('input',updateAddressSummary);
+ addressFields.addEventListener('change',updateAddressSummary);
+ addressButton.addEventListener('click',()=>regionFields(controls,addressFields,updateAddressSummary),{once:true});
  const core=node('fieldset');core.className='core-client-fields';node('legend','核心资料',core);
  for(const field of extraClientFields){
    if(field===coreClientFields[0])body.append(core);
@@ -1586,18 +1662,23 @@ function birthdayWheels(group,parts,refresh,prepare){
  const wheels=[];let previous=null,wheelFrame=0;
  function flushWheels(){cancelAnimationFrame(wheelFrame);wheelFrame=0;if(!panel.hidden&&!panel.inert){wheels.forEach((w,i)=>choose(i,Math.round(w.scrollTop/36)));announce()}}
  function sync(){
-   refresh();trigger.textContent=parts.every(p=>p.value)?parts.map(p=>p.selectedOptions[0].text).join(' '):'选择年月日';trigger.setAttribute("aria-label","出生日期，"+trigger.textContent);trigger.textContent=host.querySelector("small").textContent;
+   refresh();
+   trigger.textContent='生日';
+   const selected=parts.filter(p=>p.value).map(p=>p.selectedOptions[0].text).join(' ')||'选择年月日';
+   if(parts[0].value&&!parts[1].value)trigger.textContent=parts[0].value+'年';
+   trigger.setAttribute('aria-label','出生日期，'+selected);
+   trigger.title=selected;
  }
- function align(i){const s=parts[i],w=wheels[i];w.scrollTop=Math.max(0,s.selectedIndex-1)*36}
+ function align(i){const s=parts[i],w=wheels[i];w.scrollTop=Math.max(0,s.selectedIndex)*36}
  function choose(i,index){
-   const s=parts[i];if(!s.options[index+1]||s.selectedIndex===index+1)return;
-   s.selectedIndex=index+1;s.onchange();
-   if(i<2){if(!parts[2].value)parts[2].selectedIndex=parts[2].options.length-1;populate(2);align(2)}
+   const s=parts[i];if(!s.options[index]||s.selectedIndex===index)return;
+   s.selectedIndex=index;s.onchange();
+   if(i<2){populate(2);align(2)}
    sync();
  }
  function populate(i){
-   const w=wheels[i],s=parts[i];if(w.children.length===s.options.length-1)return;w.replaceChildren();
-   Array.from(s.options).slice(1).forEach((o,index)=>{const b=button(o.text,()=>{w.scrollTop=index*36;choose(i,index)},w);b.tabIndex=-1});
+   const w=wheels[i],s=parts[i];if(w.children.length===s.options.length)return;w.replaceChildren();
+   Array.from(s.options).forEach((o,index)=>{const b=button(o.value?o.text:'未选',()=>{w.scrollTop=index*36;choose(i,index)},w);b.tabIndex=-1});
  }
  parts.forEach((s,i)=>{
    const col=node('div',null,grid);node('small',['年','月','日'][i],col);
@@ -1612,7 +1693,6 @@ function birthdayWheels(group,parts,refresh,prepare){
    setPanelOpen(panel,open);trigger.setAttribute('aria-expanded',String(open));
    if(!open){if(previous){parts[0].value=previous[0];parts[1].value=previous[1];parts[1].onchange();parts[2].value=previous[2];previous=null;sync()}return}
    prepare();previous=parts.map(p=>p.value);
-   if(!parts[0].value){parts[0].value=String(new Date().getFullYear());parts[1].value='1';parts[1].onchange();parts[2].value='1'}
    parts.forEach((_,i)=>{populate(i);align(i)});sync();announce();
  }
  host.closest('.identity-row').addEventListener('keydown',e=>{if(e.key==='Escape'&&!panel.hidden){e.preventDefault();e.stopPropagation();show(false);trigger.focus()}});row.addEventListener("close-birthday",()=>show(false));
@@ -1622,7 +1702,10 @@ function birthdayWheels(group,parts,refresh,prepare){
 function birthEditor(controls,record){
  const age=controls.年龄,host=node('div');host.className='birth-group';age.parentElement.replaceWith(host);node('span','年龄',host);host.append(age);
  const animal=controls.生肖,display=node('output');animal.replaceWith(display);
- const group=node('div');group.className='birth-choices';age.replaceWith(group);
+ age.classList.add('client-age');age.setAttribute('aria-label','年龄（岁）');age.placeholder='岁';
+ let manualAge=record.出生日期||record.年龄为估算?null:(age.value||record.年龄为估算===false?age.value:null);
+ age.addEventListener('input',()=>{manualAge=age.value});
+ const group=node('div',null,host);group.className='birth-choices';
  const parts=['年','月','日'].map(unit=>{
    const select=node('select',null,group);select.setAttribute('aria-label','出生'+unit);
    select.add(new Option(unit,''));return select;
@@ -1631,8 +1714,16 @@ function birthEditor(controls,record){
  function fill(select,first,last,suffix){
    for(let i=first;i<=last;i++)select.add(new Option(i+suffix,String(i)));
  }
- function prepare(){if(year.options.length===201)return;const y=year.value,m=month.value;year.options.length=1;month.options.length=1;fill(year,1900,2099,'年');fill(month,1,12,'月');year.value=y;month.value=m}
- const initial=(record.出生日期||'').split('-').map(Number);
+ let prepared=false;
+ function prepare(){
+   if(prepared)return;
+   prepared=true;
+   const y=year.value,m=month.value;
+   year.options.length=1;month.options.length=1;
+   fill(year,1900,Math.min(2099,+today().slice(0,4)),'年');
+   fill(month,1,12,'月');year.value=y;month.value=m;
+ }
+ const initial=(record.出生日期||String(record.出生年份||'')).split('-').map(Number);
  if(initial[0])fill(year,initial[0],initial[0],'年');if(initial[1])fill(month,initial[1],initial[1],'月');
  year.value=String(initial[0]||'');month.value=String(initial[1]||'');
  function days(value){
@@ -1650,10 +1741,11 @@ function birthEditor(controls,record){
    lastBirthKey=birthKey;clearTimeout(birthTimer);birthTimer=0;
    const date=iso(),partial=parts.some(s=>s.value)&&!date,future=date&&date>today();
    year.setCustomValidity("");
+   age.readOnly=Boolean(date&&!future);
    if(date&&!future){
     const [y,m,d]=date.split('-').map(Number),now=new Date();
     age.value=String(now.getFullYear()-y-Number(now.getMonth()+1<m||(now.getMonth()+1===m&&now.getDate()<d)));
-   }else age.value=!date&&!partial&&!record.出生日期?record.年龄||'':'';
+   }else age.value=manualAge??(year.value&&+year.value<=+today().slice(0,4)?String(+today().slice(0,4)-Number(year.value)):'');
    result.textContent=future?'出生日期晚于今天':age.value?age.value+' 岁':'';
    function finish(){
     birthTimer=0;
@@ -1666,7 +1758,10 @@ function birthEditor(controls,record){
  }
  host.closest('dialog').addEventListener('close',()=>clearTimeout(birthTimer),{once:true});
  year.onchange=month.onchange=()=>{days(day.value);update()};day.onchange=update;birthdayWheels(group,parts,update,prepare);
- return item=>{host.closest(".identity-row").dispatchEvent(new Event("close-birthday"));update(true);item.出生日期=iso();item.年龄=age.value;item.生肖=animal.value};
+ return item=>{host.closest(".identity-row").dispatchEvent(new Event("close-birthday"));update(true);item.出生日期=iso();item.年龄=age.value;item.生肖=animal.value;
+  item.出生年份=(!item.出生日期&&year.value)||undefined;
+  item.年龄为估算=item.出生年份?manualAge===null:undefined;
+ };
 }
 
 function taskCalendar(input){
@@ -1895,7 +1990,378 @@ function renderStageHelpEntry(){
  entry.hidden=page!=='client';
 }
 
-function editor(k,r={},fromTask=null,referrer=null,opener=document.activeElement){if(k!=='client'&&!state.client.length){showNotice('请先新增客户。');return}
+/* Quick client entry start */
+function parseClientText(text){
+ const aliases=Object.fromEntries([...schema.client,'出生日期','销售循环','收入币种'].flatMap(key=>[[key,key],[clientFieldLabel(key),key]]));
+ Object.assign(aliases,{'客户姓名':'姓名','客户':'姓名','手机号':'电话','手机':'电话','电话号码':'电话','电子邮箱':'邮箱','地区':'国家或地区','销售步骤':'销售循环','币种':'收入币种'});
+ const labels=Object.keys(aliases).sort((a,b)=>b.length-a.length).map(key=>key.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).join('|');
+ const marked=new RegExp('^('+labels+')(?:\\s*[:：]\\s*|\\s*(?:叫做|叫|为|是)\\s*|\\s+)(.+)$');
+ const englishName=/^\p{Script=Latin}+(?:(?:[-'’]|[ \t]+)\p{Script=Latin}+){0,7}$/u;
+ const chineseName=/^[\p{Script=Han}]{2,5}$/u;
+ function parseName(value){
+  const pair=value.match(/^(.+?)\s*[（(]\s*(.+?)\s*[）)]$/);
+  if(pair&&chineseName.test(pair[1])){
+   const spelling=pair[2].replace(/^英文名(?:是|[：:]|\s)\s*/,'');
+   if(englishName.test(spelling))return pair[1]+'（'+spelling+'）';
+  }
+  if(chineseName.test(value)||englishName.test(value))return value;
+  return '';
+ }
+ function meetingName(value){
+  const action=value.match(/\s*(?:聊(?:了)?|谈(?:了)?|讨论(?:了)?|沟通(?:了)?|了解(?:了)?)(?=\s*(?:保险|储蓄|保障|需求|方案|投保))/);
+  return action?[value.slice(0,action.index).trim(),value.slice(action.index).trim()]:[value.trim(),''];
+ }
+ function readClause(raw){
+  const field=raw.match(marked)||raw.match(/^(城市)(中国香港|香港|中国澳门|澳门)$/);
+  if(field)return [aliases[field[1]],field[2]];
+  const subject=raw.replace(/^(?:该客户的?|这位客户的?|[他她]的?)(?=姓名|电话|手机|邮箱|出生日期|年龄|公司|性别|销售循环)/,'');
+  const contact=subject.match(marked);
+  if(contact)return [aliases[contact[1]],contact[2]];
+  const named=subject.match(/^(?:(?:客户)?姓名|[他她]叫(?:做)?)\s*(.+)$/);
+  if(named)return ['姓名',named[1]];
+  const timePrefix='(?:(?:今天|今日|昨天|今早|今晨|昨晚|刚刚|刚才|上午|下午)(?:上午|下午)?)?';
+  const meeting=raw.match(new RegExp('^'+timePrefix+'(?:我)?(?:见了|见到|拜访了?|会见了?|约见了?)(?:客户)?\\s*(.+)$'));
+  if(meeting){
+   const [name,action]=meetingName(meeting[1]);
+   return ['姓名',name.replace(/(?:先生|女士)$/,'').trim(),action];
+  }
+  const together=raw.match(new RegExp('^'+timePrefix+'(?:我)?[跟与和]\\s*(.+?)\\s*(?:见面|会面|碰面)(.*)$'));
+  if(together)return ['姓名',together[1],together[2].trim()];
+  const marriage=raw.match(/^(?:目前|现在|当前)?[他她]?(?:还是|目前|现在)?(未婚|已婚|离异|丧偶)$/);
+  if(marriage)return ['婚姻状况',marriage[1]];
+  const progress=raw.match(/^(?:销售循环|销售步骤|目前|现在|当前)(?:目前|现在|当前)?\s*(?:在做|处于|进行到|到了|已到|正在做)\s*(.+)$/);
+  if(progress)return ['销售循环',progress[1]];
+  return null;
+ }
+ const bareEmail=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+ const draft={},unresolved=[],values=new Map(),inferred=new Map(),evidence=[],notes=[],mentionedSteps=[];
+ const normalizeStep=value=>value.normalize('NFKC').toLowerCase().replace(/\s+/g,'');
+ const stepMatches=choices.task.map(label=>{
+  const key=normalizeStep(label);
+  const escaped=key.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+  return {label,pattern:/^[a-z]/.test(key)?new RegExp('(?:^|[^a-z])'+escaped+'(?![a-z])'):new RegExp(escaped)};
+ });
+ const normalizeCity=city=>city.replace(/市$/,'');
+ let cities=null;
+ function matchingCities(city){
+  if(!cities){
+   cities=new Map();
+   for(const place of (clientRegionFields.中国内地?.[1]||'').split(' ').filter(Boolean)){
+    for(const name of addressOptions('中国内地',{省或直辖市:place}).城市){
+     const key=normalizeCity(name);
+     if(!cities.has(key))cities.set(key,[]);
+     cities.get(key).push([place,name]);
+    }
+   }
+  }
+  return cities.get(normalizeCity(city))||[];
+ }
+ const currentYear=Number(today().slice(0,4));
+ function suggest(key,value,raw,keyword=value){
+  if(!inferred.has(key))inferred.set(key,[]);
+  inferred.get(key).push({value,raw,keyword});
+ }
+ function add(key,value,raw){
+  if(!values.has(key))values.set(key,[]);
+  values.get(key).push({value,raw});
+ }
+ for(const line of text.split(/\r?\n/)){
+  const pieces=line.split(/([，,；;。！？!?]|\.(?=\s|$))/);
+  for(let i=0;i<pieces.length;i+=2){
+   const raw=pieces[i].trim();
+   if(!raw)continue;
+   const match=readClause(raw);
+   if(match?.[0]!=='备注'){
+    const pronoun=raw.match(/^(?:目前|现在|当前)?\s*([他她])(?!们)/);
+    if(pronoun)suggest('性别',pronoun[1]==='她'?'女':'男',raw,pronoun[1]);
+    const birthday=raw.match(/(?:^|[^\d])(\d{4})年(\d{1,2})月(\d{1,2})日出生/)||raw.match(/出生(?:于|在)?\s*(\d{4})年(\d{1,2})月(\d{1,2})日/);
+    const year=raw.match(/(?:^|[^\d])(?:(\d{4})\s*年(?:出生|生人|生(?=$|的$))|出生(?:于|在)?\s*(\d{4})\s*年(?!\d))/)||raw.match(/^(?:(?:她|他|客户)(?:是)?\s*)?(\d{4})\s*年的$/);
+    const statedAge=raw.match(/^\s*(?:(?:目前|现在)?(?:他|她|客户)\s*(?:今年|现在|目前|是)?\s*|今年\s*)?(\d{1,3})\s*(?:周)?岁(?:了)?$/);
+    if(!match&&statedAge)add('年龄',statedAge[1],raw);
+    if(!match&&birthday)add('出生日期',birthday.slice(1).join('-'),raw);
+    else if(!match&&year){
+     const birthYear=Number(year[1]||year[2]);
+     if(birthYear>=1900&&birthYear<=Math.min(2099,currentYear))add('出生年份',String(birthYear),raw);
+    }
+    if(!/(?:未|没|不|无须|完成|结束|做完|签过|签单了|已签单|之前|上周|过去)/.test(raw)){
+     for(const {label,pattern} of stepMatches){
+      if(pattern.test(normalizeStep(raw)))mentionedSteps.push({value:label,raw,keyword:label});
+     }
+     const signing=choices.task.find(label=>label.includes('签单'));
+     if(signing&&raw.includes('签单')){
+      mentionedSteps.push({value:signing,raw,keyword:'签单'});
+      if(/(?:下周|下一周|明天|后天|本周|约好|约定|安排)/.test(raw))suggest('销售循环',signing,raw,'签单');
+     }
+    }
+   }
+   if(match?.[0]==='备注'){
+    add('备注',match[1]+pieces.slice(i+1).join(''),pieces.slice(i).join(''));
+    break;
+   }
+   if(match?.[0]==='姓名'){
+    const names=match[1].split(/\s+(?:and|&)\s+|以及|[、及与和跟]/i).map(value=>parseName(value.trim()));
+    if(names.every(Boolean)){
+     for(const name of names)add('姓名',name,raw);
+     if(match[2])unresolved.push(match[2]);
+    }else unresolved.push(raw);
+   }else if(match)add(match[0],match[1].trim(),raw);
+   else if(bareEmail.test(raw))add('邮箱',raw,raw);
+   else {
+    const interest=/感兴趣|有兴趣/.test(raw)&&/方案|保险|产品|储蓄|保障/.test(raw);
+    const scheduled=/(?:下周|下一周|明天|后天|本周|约好|约定|让(?:我|我们)|需要|要我|答应|安排)/.test(raw)&&!/(?:不用|不需要|暂不|不打算)/.test(raw);
+    const proposal=scheduled&&(/(?:出|做|准备|拟定)[^，。]{0,10}方案/.test(raw)||
+     notes.some(note=>/方案.*(?:感兴趣|有兴趣)/.test(note))&&/(?:出|做|准备)一份(?:给[他她]|[并再]讲解|$)/.test(raw));
+    const presentation=scheduled&&/(?:讲解|介绍)(?:这份|该|储蓄|保险|保障)?方案/.test(raw);
+    const residence=raw.match(/^(?:目前|现在|长期)?(?:[他她]|客户)?(?:目前|现在)?(?:常住(?:在)?|住(?:在)?|居住在|定居在?)\s*([\p{Script=Han}]{2,12})$/u);
+    const marriagePlan=/^(?:目前|现在)?[他她]?(?:计划|打算|准备)(?:和|跟|与)(?:男朋友|女朋友|对象|未婚夫|未婚妻)结婚$/.test(raw);
+    if(interest||proposal||presentation||raw==='打工族')notes.push(raw);
+    if(proposal)suggest('销售循环','出方案',raw);
+    else if(presentation)suggest('销售循环','方案讲解',raw);
+    const standaloneCity=!residence&&/^[\p{Script=Han}]{2,12}$/u.test(raw)&&matchingCities(raw).length>0;
+    if(residence)suggest('常住城市',residence[1],raw);
+    else if(standaloneCity)suggest('独立城市',raw,raw);
+    if(marriagePlan)suggest('婚姻状况','未婚',raw,raw.match(/(?:计划|打算|准备).*结婚/)[0]);
+    if(!interest&&!proposal&&!presentation&&!residence&&!standaloneCity&&!marriagePlan&&raw!=='打工族')unresolved.push(raw);
+   }
+  }
+ }
+ if(!inferred.has('销售循环')&&mentionedSteps.length)inferred.set('销售循环',mentionedSteps);
+ for(const key of ['销售循环','婚姻状况','性别','年龄']){
+  const items=inferred.get(key);
+  if(!items||values.has(key)||(key==='年龄'&&values.has('出生日期')))continue;
+  if((key==='年龄'||key==='性别')&&new Set(values.get('姓名')?.map(item=>item.value)).size>1)continue;
+  values.set(key,key==='销售循环'&&items!==mentionedSteps?[items[0]]:items);
+ }
+ const explicitResidence=inferred.get('常住城市');
+ const standalone=inferred.get('独立城市');
+ const residence=explicitResidence||standalone;
+ if(explicitResidence&&standalone){
+  for(const item of standalone)if(normalizeCity(item.value)!==normalizeCity(explicitResidence[0].value))unresolved.push(item.raw);
+ }
+ if(residence){
+  const city=normalizeCity(residence[0].value);
+  const region=values.get('国家或地区');
+  const province=values.get('省或直辖市');
+  const matches=matchingCities(city).filter(([place])=>!province||province.every(item=>item.value===place));
+  if(!values.has('城市')&&(!region||region.every(item=>item.value==='中国内地'))&&matches.length===1&&residence.every(item=>normalizeCity(item.value)===city)){
+   const [place,cityName]=matches[0];
+   for(const [key,value] of [['国家或地区','中国内地'],['省或直辖市',place],['城市',cityName]]){
+    if(!values.has(key))add(key,value,residence[0].raw);
+   }
+   evidence.push({field:'常住地址',raw:residence[0].value});
+  }else unresolved.push(...residence.map(item=>item.raw));
+ }
+ for(const item of values.get('出生年份')||[]){
+  for(let i=unresolved.length-1;i>=0;i--)if(unresolved[i]===item.raw)unresolved.splice(i,1);
+ }
+ const first=text.trim().split(/[，,；;\r\n]/)[0].trim();
+ if(!values.has('姓名')&&values.size&&unresolved[0]===first&&parseName(first)&&!/(?:签单|未|不|已完成)/.test(first)&&!stepMatches.some(step=>step.pattern.test(normalizeStep(first)))){
+  add('姓名',parseName(first),first);unresolved.shift();
+ }
+ for(const [key,items] of values){
+  const candidates=[...new Set(items.map(item=>item.value))];
+  if(key==='电话'){
+   const phones=[];
+   for(const item of items){
+    const numbers=item.value.split(/\s*(?:[、/／|]|以及|或者|和|或)\s*/).map(n=>n.trim());
+    for(const number of numbers){
+     if(/^(?:\+(?:852|86)\s*)?[\d() -]+$/.test(number)&&number.replace(/\D/g,'').length>=7)phones.push(number);
+     else unresolved.push(number||item.raw);
+    }
+   }
+   if(phones.length)draft.电话号码=[...new Set(phones)];
+   continue;
+  }
+  if(candidates.length!==1){unresolved.push(...items.map(item=>item.raw));continue}
+  let [value]=candidates;
+  if(key==='销售循环'){
+   const step=choices.task.findIndex(label=>normalizeStep(label)===normalizeStep(value)||(value==='签单'&&label.includes('签单')))+1;
+   if(step||value==='待设置'){
+    draft.salesStep=step;
+    if(step)evidence.push({field:'销售循环',raw:items[0].keyword||value});
+   }
+   else unresolved.push(items[0].raw);
+   continue;
+  }
+  if(key==='出生日期'){
+   const date=value.match(/^(\d{4})[-/.年](\d{1,2})[-/.月](\d{1,2})日?$/);
+   value=date?[date[1],date[2].padStart(2,'0'),date[3].padStart(2,'0')].join('-'):'';
+   const parsed=new Date(value+'T00:00:00Z');
+   if(!Number.isFinite(+parsed)||parsed.toISOString().slice(0,10)!==value||value>today()){unresolved.push(items[0].raw);continue}
+  }
+  if(key==='年龄')value=value.replace(/\s*(?:周)?岁$/,'');
+  const allowed=key==='性别'?['男','女','其他']:key==='收入币种'?choices.币种:choices[key];
+  if((allowed&&!allowed.includes(value))||(key==='年龄'&&!/^\d+$/.test(value))||(key==='邮箱'&&!bareEmail.test(value))){
+   unresolved.push(items[0].raw);continue;
+  }
+  draft[key]=value;
+  if(key==='姓名')evidence.push({field:key,raw:value});
+  if(key==='年龄'&&!values.has('出生日期')&&items[0]!==inferred.get('年龄')?.[0])evidence.push({field:key,raw:value+'岁'});
+ }
+ if(['香港','中国香港','澳门','中国澳门'].includes(draft.城市)&&!draft.国家或地区){
+  draft.国家或地区='中国'+draft.城市.replace(/^中国/,'');
+  delete draft.城市;
+ }
+ const region=draft.国家或地区;
+ const regional=clientRegionFields[region];
+ for(const key of addressParts.slice(1)){
+  if(!draft[key])continue;
+  const allowed=regional?.[0]===key?regional[1].split(' '):addressOptions(region,draft)[key];
+  const acceptsFreeText=region&&!regional || regional&&addressParts.indexOf(key)>=4;
+  if(allowed?.includes(draft[key])||acceptsFreeText)continue;
+  unresolved.push(...(values.get(key)||[]).map(item=>item.raw));delete draft[key];
+ }
+ if(draft.出生日期)delete draft.出生年份;
+ if(draft.出生年份){
+  evidence.push({field:'出生年份',raw:draft.出生年份+'年'});
+  if(draft.年龄==null&&!values.has('年龄')){
+   draft.年龄=String(currentYear-Number(draft.出生年份));
+   draft.年龄为估算=true;
+   evidence.push({field:'年龄（按出生年份估算）',raw:draft.年龄+'岁'});
+  }
+ }
+ if(notes.length)draft.备注=[draft.备注,...new Set(notes)].filter(Boolean).join('\n');
+ for(const [key,property] of [['婚姻状况','婚姻状况'],['性别','性别'],['年龄','年龄']]){
+  if(inferred.get(key)?.[0]===values.get(key)?.[0]&&inferred.has(key)&&draft[property]!=null)evidence.push({field:key==='年龄'?'年龄（按出生年份估算）':key,raw:inferred.get(key)[0].keyword});
+ }
+ return {draft,unresolved,...(evidence.length?{evidence}:{})};
+}
+let quickClientText='';
+function showQuickClientEntry(entry){
+ let host=$('#quick-client-entry');
+ if(!host){
+  host=node('dialog',null,document.body);host.id='quick-client-entry';host.className='stage-help-dialog';host.dataset.quickClient='';
+  host.setAttribute('aria-labelledby','quick-client-title');
+  const head=node('div',null,host);head.className='stage-help-dialog-head';
+  node('h2','会后速记',head).id='quick-client-title';
+  const body=node('div',null,host);body.className='stage-help-dialog-body';
+  const label=node('label','记录要点',body);
+  const input=node('textarea',null,label);input.rows=4;
+  input.placeholder='快速记下刚了解到的客户信息。';
+  const actions=node('div',null,body);actions.className='actions';
+  let nextAction=null;
+  function close(action=null){
+   if(!host.open||host.dataset.closing==='true')return;
+   nextAction=action;
+   input.readOnly=true;dismiss.disabled=true;manual.disabled=true;identify.disabled=true;
+   closeStageInstructions(host);
+  }
+  const dismiss=button('关闭',()=>close(),head);
+  function clearSavedDraft(raw){
+   if(quickClientText!==raw)return;
+   quickClientText='';input.value='';identify.disabled=true;
+  }
+  const manual=button('手动填写',()=>{
+   const raw=input.value;
+   close(()=>{
+    if(!raw.trim()){editor('client',{},null,null,entry);return}
+    editor('client',{备注:raw},null,null,entry,{raw,filledFromOriginal:true,duplicates:[],onSaved:()=>clearSavedDraft(raw)});
+   });
+  },actions);
+  const identify=button('识别并填写',()=>{
+   const raw=input.value;
+   if(!raw.trim())return;
+   const {draft,unresolved,evidence}=parseClientText(raw);
+   const filledFromOriginal=Object.keys(draft).length===0;
+   if(filledFromOriginal)draft.备注=raw;
+   else if(unresolved.length){
+    const existing=draft.备注||'';
+    const seen=new Set(existing.split(/\r?\n/).map(line=>line.trim()));
+    const additions=unresolved.filter(text=>{
+     const key=text.trim();
+     if(!key||seen.has(key))return false;
+     seen.add(key);return true;
+    });
+    draft.备注=[existing,...additions].filter(Boolean).join('\n');
+   }
+   const email=String(draft.邮箱||'').trim().toLowerCase();
+   const digits=value=>String(value).replace(/\D/g,'');
+   const normalized=value=>[digits(value),digits(value).replace(/^(?:852|86)(?=\d{7,}$)/,'')];
+   const phones=new Set((draft.电话号码||[]).flatMap(normalized));
+   const duplicates=state.client.filter(c=>{
+    const existing=Array.isArray(c.电话号码)&&c.电话号码.length?c.电话号码:String(c.电话||'').split('·');
+    return email&&String(c.邮箱||'').trim().toLowerCase()===email || existing.some(n=>normalized(n).some(number=>number&&phones.has(number)));
+   });
+   close(()=>editor('client',draft,null,null,entry,{raw,addedToNotes:unresolved.length>0,filledFromOriginal,evidence,duplicates,onSaved:()=>clearSavedDraft(raw)}));
+  },actions);
+  identify.className='primary';
+  input.oninput=()=>{quickClientText=input.value;identify.disabled=!quickClientText.trim()};
+  host.addEventListener('cancel',event=>{event.preventDefault();close()});
+  host.addEventListener('close',()=>{
+   const action=nextAction;nextAction=null;
+   input.readOnly=false;dismiss.disabled=false;manual.disabled=false;input.oninput();
+   if(!action){entry.focus({preventScroll:true});return}
+   action();
+  });
+  host.openQuickEntry=()=>{
+   input.value=quickClientText;input.oninput();
+   openModal(host,entry);body.scrollTop=0;input.focus({preventScroll:true});
+   if(!matchMedia('(prefers-reduced-motion: reduce)').matches){
+    host._stageMotion=host.animate([{opacity:0,transform:'translateY(5px) scale(.985)'},{opacity:1,transform:'none'}],{duration:160,easing:'ease-out'});
+   }
+  };
+ }
+ if(!host.open&&!modalLayers.has(host)&&!host.dataset.closing)host.openQuickEntry();
+}
+/* Quick client entry end */
+
+function renderQuickClientReview(fields,entry){
+ const review=node('section');review.className='quick-client-review';fields.prepend(review);
+ const trigger=button('识别核对',()=>toggle(!open),review);trigger.className='quick-review-trigger';
+ const arrow=node('span',null,trigger);arrow.className='quick-review-arrow';arrow.setAttribute('aria-hidden','true');
+ const panel=node('div',null,review);panel.id='quick-client-review-content';trigger.setAttribute('aria-controls',panel.id);
+ const content=node('div',null,panel);content.className='quick-review-content';
+ function section(title,kind){
+  const area=node('section',null,content);area.className='quick-review-section quick-review-'+kind;
+  node('h3',title,area);return area;
+ }
+ node('p',entry.raw,section('原文','original'));
+ const hasExplanation=entry.filledFromOriginal||entry.addedToNotes||Boolean(entry.evidence?.length);
+ if(hasExplanation){
+  const area=node('section',null,content);area.className='quick-review-section quick-review-pending';
+  if(entry.evidence?.length){
+   const list=node('ul',null,area);
+   const fieldOrder=['姓名','性别','出生年份','年龄','销售循环','地址'];
+   const rank=item=>{
+    const key=item.field.replace(/^常住地址$/,'地址').replace(/（.*）$/,'');
+    const index=fieldOrder.indexOf(key);
+    return index<0?fieldOrder.length:index;
+   };
+   for(const item of [...entry.evidence].sort((a,b)=>rank(a)-rank(b))){
+    const row=node('li',null,list);
+    node('strong',item.field,row);node('p',item.raw,row);
+   }
+  }
+  const explanation=node('div',null,area);
+  if(entry.evidence?.length)explanation.className='quick-review-footer';
+  node('h3','填写说明',explanation);
+  const message=entry.filledFromOriginal?'原文已填入备注，请补填客户姓名':
+   entry.addedToNotes?'其余内容已填入备注，可直接修改':'请核对预填资料，需要调整可直接修改表单。';
+  const notice=node('p',message,explanation);
+  if(entry.filledFromOriginal)notice.setAttribute('role','status');
+ }
+ let open=hasExplanation,motion=null;
+ function sync(){
+  trigger.setAttribute('aria-expanded',String(open));panel.inert=!open;
+ }
+ function toggle(next){
+  const startHeight=panel.hidden?0:panel.getBoundingClientRect().height;
+  const startOpacity=panel.hidden?0:Number(getComputedStyle(panel).opacity);
+  motion?.cancel();motion=null;open=next;sync();
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches){
+   panel.hidden=!open;panel.style.overflow='';return;
+  }
+  panel.hidden=false;panel.style.overflow='hidden';
+  const effect=panel.animate([{height:startHeight+'px',opacity:startOpacity},{height:(open?content.getBoundingClientRect().height:0)+'px',opacity:open?1:0}],{duration:open?160:100,easing:'ease-out'});
+  motion=effect;
+  effect.onfinish=()=>{
+   if(motion!==effect)return;
+   motion=null;panel.hidden=!open;panel.style.overflow='';
+  };
+ }
+ panel.hidden=!open;sync();
+}
+function editor(k,r={},fromTask=null,referrer=null,opener=document.activeElement,quickEntry=null){if(k!=='client'&&!state.client.length){showNotice('请先新增客户。');return}
  const d=$('dialog'),fields=$('#fields'),controls={};d.dataset.editor=k;fields.replaceChildren();$('form h2').textContent=(r.id?'编辑':'新增')+names[k];
  for(const f of schema[k]){const label=node('label',k==='client'?clientFieldLabel(f):f,fields);let opts=f==="性别"?[["","请选择"],["男","男"],["女","女"],["其他","其他"]]:f==='客户'?(k==='task'?[lookupClient(r.客户)||state.client[0]].filter(Boolean):state.client).map(c=>[c.id,c.姓名]):(f==='状态'?choices[k]:choices[f])?.map(x=>[x,x]);
  const input=node(opts?'select':f==='备注'?'textarea':'input',null,label);controls[f]=input;
@@ -1954,6 +2420,13 @@ function editor(k,r={},fromTask=null,referrer=null,opener=document.activeElement
      select.value=String(clientStep());select.dispatchEvent(new Event('change'));reflectConflict();
    });
  }
+ if(quickEntry){
+   renderQuickClientReview(fields,quickEntry);
+   if(quickEntry.duplicates.length){
+    const notice=node('p','可能重复：'+quickEntry.duplicates.map(c=>c.姓名).join('、'));
+    notice.setAttribute('role','status');fields.prepend(notice);
+   }
+ }
  function readValues(){const item={};for(const [f,el] of Object.entries(controls))item[f]=el.value.trim();if(timeRange)Object.assign(item,timeRange.read());if(k==='client')item.salesStep=Number(cycle.value);if(k==='task')item.状态=r.id&&!openCycle(r)?r.状态:choices.task[Number(cycle.value)-1]||'待设置';if(writeBirth){writeBirth(item);}if(writeIncome)writeIncome(item);if(readPhone){item.电话号码=readPhone();item.电话=item.电话号码.join(" · ")};return item}
  const footer=d.querySelector("form>.actions");footer.querySelector(".complete-task")?.remove();if(k==="task"&&r.id&&isPendingTask(r)){const complete=node("button","标记本次跟进完成");complete.type="button";complete.onclick=()=>{const submit=node("button");submit.type="submit";submit.hidden=true;submit.className="complete-task";footer.append(submit);try{d.querySelector("form").requestSubmit(submit)}finally{submit.remove()}};complete.className="complete-task";footer.prepend(complete)}
  $('form').onsubmit=e=>{e.preventDefault();const next=copy(),item={...r,id:r.id||Array.from(crypto.getRandomValues(new Uint32Array(4))).join("-")};Object.assign(item,readValues());if(item.出生日期>today()){showNotice("出生日期不能晚于今天。");return}if(!title(k,item)){showNotice('请填写名称或摘要。');return}
@@ -1971,6 +2444,7 @@ function editor(k,r={},fromTask=null,referrer=null,opener=document.activeElement
  if(k==="task"&&e.submitter?.classList.contains("complete-task")){if(next.client.find(c=>String(c.id)===item.客户)?.cycleConflict){showNotice("请先在列表中确认该客户的销售循环。");return}item.completedAt=new Date().toISOString();item.completedCycle=stepLabel(Number(cycle.value))}
  if(r.id)next[k][next[k].findIndex(x=>x.id===r.id)]=item;else next[k].unshift(item);if(fromTask){const t=next.task.find(x=>x.id===fromTask);if(t){t.completedCycle=taskCycle(t);t.completedAt=new Date().toISOString()}}
  if(persist(next,(r.id?'编辑':'新增')+names[k]+' · '+title(k,item),r.id||null)){
+   quickEntry?.onSaved();
    if(r.id&&(page==='client'||page==='task'))d.addEventListener('close',()=>{
      const row=[...document.querySelectorAll('#rows article[data-row-id]')].find(entry=>entry.dataset.rowId===String(r.id));
      if(row&&(row.getBoundingClientRect().bottom<=0||row.getBoundingClientRect().top>=innerHeight))row.scrollIntoView({block:'nearest',behavior:'instant'});
@@ -2019,10 +2493,9 @@ function clientListing(r,row){
    name.setAttribute('aria-expanded',String(!details.hidden));
  },summary);
  name.className="client-name";name.title=r.姓名;if(r.archived)node("span","已成交",name).className="won-label";node("span",r.姓名,name).className="client-name-text";name.setAttribute('aria-expanded',String(!details.hidden));
- const stage=stageOf(r.salesStep),stageName=customerStage(r);
- row.style.setProperty('--stage-color',stage?.[1]||'#888');
+ row.style.setProperty('--stage-color',customerStageColor(r));
  row.classList.toggle('stage-emphasis',listPrefs.stage!=='全部阶段'||progressOrders.includes(listPrefs.order));
- const badge=node('span',stageName,name);badge.className='stage-badge';if(r.cycleConflict)badge.onclick=e=>{e.stopPropagation();resolveCycle(r.id,name)};
+ const badge=node('span',customerCycle(r),name);badge.className='stage-badge';if(r.cycleConflict)badge.onclick=e=>{e.stopPropagation();resolveCycle(r.id,name)};
  const address=clientAddress(r);
  const age=r.出生日期?birthFacts(r.出生日期).age:r.年龄;
  for(const [label,value] of [['性别',r.性别],['年龄',age==null||age===''?'':age+' 岁'],["城市",address.city],["电话",r.电话]]){
@@ -2064,32 +2537,41 @@ function agendaRows(section,data,date){
          ...tasks.filter(r=>r.日期===date).map(r=>['task',r])];
 }
 
+const newestOrders=['最近新增','最早新增'];
 const progressOrders=['销售循环阶段正序','销售循环阶段倒序'];
 const cityOrders=['城市升序','城市降序'];
+const dateOrders=['日期从早到晚','日期从晚到早'];
 const listPrefs={stage:'全部阶段',status:'全部客户',city:'',order:'默认顺序'};
+const taskPrefs={stage:'全部阶段',period:'全部日期',order:'默认顺序'};
 const nameOrder=new Intl.Collator('zh-CN',{numeric:true});
+function nextListOrder(order,pair){return pair.length>1&&order===pair[0]?pair[1]:pair[0]}
+function clientSortStep(client){
+ const step=Number(client.salesStep);
+ return !client.cycleConflict&&Number.isInteger(step)&&choices.task[step-1]?step:null;
+}
+function sortListRows(rows,value,compare,direction){
+ const keys=new Map(rows.map(row=>[row,value(row)]));
+ rows.sort((a,b)=>{
+   const left=keys.get(a),right=keys.get(b);
+   if(left==null||right==null)return Number(left==null)-Number(right==null);
+   return direction*compare(left,right);
+ });
+}
 function listedClients(records){
- const rows=records.filter(r=>(listPrefs.stage==='全部阶段'||customerStage(r)===listPrefs.stage)&&(listPrefs.status==='全部客户'||Boolean(r.archived)===(listPrefs.status==='已成交'))&&(!listPrefs.city||clientAddress(r).city===listPrefs.city));
- if(progressOrders.includes(listPrefs.order)){
-   const direction=listPrefs.order===progressOrders[0]?1:-1;
-   rows.sort((a,b)=>Number(!a.salesStep)-Number(!b.salesStep)||direction*((a.salesStep||0)-(b.salesStep||0))||nameOrder.compare(a.姓名||'',b.姓名||''));
- }
- if(cityOrders.includes(listPrefs.order)){
-   const cities=new Map(rows.map(r=>[r.id,clientAddress(r).city.trim()]));
-   const direction=listPrefs.order===cityOrders[0]?1:-1;
-   rows.sort((a,b)=>{
-     const left=cities.get(a.id),right=cities.get(b.id);
-     return Number(!left)-Number(!right)||direction*nameOrder.compare(left,right)||nameOrder.compare(a.姓名||'',b.姓名||'');
-   });
- }
- if(listPrefs.order==='最近新增')rows.sort((a,b)=>(Date.parse(b.createdAt)||0)-(Date.parse(a.createdAt)||0));
+ const rows=records.filter(r=>(listPrefs.stage==='全部阶段'||(!r.cycleConflict&&stepLabel(clientSortStep(r))===listPrefs.stage))&&(listPrefs.status==='全部客户'||Boolean(r.archived)===(listPrefs.status==='已成交'))&&(!listPrefs.city||clientAddress(r).city===listPrefs.city));
+ const order=listPrefs.order;
+ if(progressOrders.includes(order))sortListRows(rows,clientSortStep,(a,b)=>a-b,order===progressOrders[0]?1:-1);
+ if(cityOrders.includes(order))sortListRows(rows,r=>clientAddress(r).city.trim()||null,nameOrder.compare,order===cityOrders[0]?1:-1);
+ if(newestOrders.includes(order))sortListRows(rows,r=>{
+   const timestamp=Date.parse(r.createdAt);
+   return Number.isFinite(timestamp)?timestamp:null;
+ },(a,b)=>a-b,order===newestOrders[0]?-1:1);
  return rows;
 }
-const taskPrefs={stage:'全部阶段',period:'全部日期',order:'默认顺序'};
 function listedTasks(records){
  const date=today();
  const rows=records.filter(r=>(taskPrefs.stage==='全部阶段'||taskCycle(r)===taskPrefs.stage)&&(taskPrefs.period==='全部日期'||(r.日期&&(taskPrefs.period==='今天'?r.日期===date:taskPrefs.period==='今天之前'?r.日期<date:r.日期>date))));
- if(taskPrefs.order!=='默认顺序')rows.sort((a,b)=>String(a.日期||'').localeCompare(String(b.日期||''))*(taskPrefs.order==='日期从早到晚'?1:-1));
+ if(dateOrders.includes(taskPrefs.order))sortListRows(rows,r=>r.日期||null,(a,b)=>a.localeCompare(b),taskPrefs.order===dateOrders[0]?1:-1);
  return rows;
 }
 
@@ -2113,8 +2595,27 @@ function renderClientTools(){
    group.ontoggle=()=>{if(group.open)list.querySelector('[aria-pressed=true]')?.scrollIntoView({block:'nearest'});if(group.open)for(const sibling of content.querySelectorAll('details'))if(sibling!==group)sibling.open=false};
  }
  function paint(){content.replaceChildren();for(const tab of tabs.children)tab.setAttribute('aria-pressed',String(tab.textContent===view));
-   if(view==='排序'){choices('排列方式','order',task?['默认顺序','日期从早到晚','日期从晚到早']:['默认顺序','最近新增',...progressOrders,...cityOrders]);content.firstElementChild.open=true;return}
-   if(task){choices('销售循环','stage',['全部阶段',...new Set([...taskStages(),...state.task.map(taskCycle).filter(Boolean)])]);choices('跟进日期','period',['全部日期','今天','今天之前','今天之后'])}else{   choices('销售阶段','stage',['全部阶段',...stages.map(s=>s[0]),'待设置','待确认']);choices('客户状态','status',['全部客户','未成交','已成交']);choices('城市','city',['',...cities]);}
+   if(view==='排序'){
+     const group=node('details',null,content),head=node('summary',null,group);
+     const list=node('div',null,group);list.className='list-choices';group.open=true;
+     const options=task?[['跟进日期',dateOrders]]:[['最近新增',newestOrders],['销售循环',progressOrders],['城市',cityOrders]];
+     const controls=[['默认顺序',['默认顺序']],...options].map(([label,pair])=>{
+       const opt=button(label,()=>{prefs.order=nextListOrder(prefs.order,pair);refreshSort();update();drawRows()},list);
+       return {label,pair,opt};
+     });
+     function refreshSort(){
+       head.textContent='排列方式 · '+prefs.order;
+       for(const {label,pair,opt} of controls){
+         const selected=pair.includes(prefs.order);
+         const directions=pair===newestOrders?['由新到旧','由旧到新']:pair===progressOrders?['正序','倒序']:pair===cityOrders?['升序','降序']:['从早到晚','从晚到早'];
+         const direction=directions[pair.indexOf(prefs.order)];
+         opt.textContent=selected&&pair.length>1?label+' · '+direction:label;
+         opt.setAttribute('aria-pressed',String(selected));
+       }
+     }
+     refreshSort();return;
+   }
+   if(task){choices('销售循环','stage',['全部阶段',...new Set([...taskStages(),...state.task.map(taskCycle).filter(Boolean)])]);choices('跟进日期','period',['全部日期','今天','今天之前','今天之后'])}else{   choices('销售循环','stage',['全部阶段',...taskStages(),'待设置']);choices('客户状态','status',['全部客户','未成交','已成交']);choices('城市','city',['',...cities]);}
    button('清除筛选',()=>{if(task){prefs.stage='全部阶段';prefs.period='全部日期'}else{prefs.status='全部客户';prefs.city='';prefs.stage='全部阶段'}paint();tabs.firstElementChild.focus();update();drawRows()},content)
  }
  for(const name of ['筛选','排序'])button(name,()=>{view=name;paint()},tabs);
@@ -2245,9 +2746,21 @@ const excel=button('导出 Excel 文件',()=>exportClientExcel(excel,feedback),a
 const row=node("article",null,group);row.dataset.rowId=r.id;if(k==="task")row.classList.add("record-hover","task-record");let actionHost=row;if(k==="client"){clientListing(r,row);return}else{const body=node("div",null,row);const heading=node("strong",title(k,r)+(k==="task"&&r.completedAt?" · 已完成":""),body);if(page==="home"&&section==="task"&&r.日期>today())node("span","请跟进",heading).className="followup-reminder";if(page==="home"&&section==="meet")node("span",k==="task"?"跟进":"会面",heading).className="agenda-kind";if(k==="task"){body.classList.add("task-body");const meta=node("small",null,body);meta.className="task-metadata";for(const [i,[label,value]] of [["跟进客户",client(r.客户)],["跟进日期",r.日期],["销售循环",taskCycle(r)]].entries()){
  const field=node('span',null,meta);field.className='task-field';
  node('span',label,field).className='task-field-label';
- const cell=node('span',i===1?'':value||'—',field);cell.className='task-field-value';
+ const showStageBadge=page==='task'&&i===2;
+ const cell=node('span',i===1||showStageBadge?'':value||'—',field);cell.className='task-field-value';
  if(i===1)cell.append(workbenchScheduleSummary(r));
-}if(r.地点)node("small",r.地点,body).className="schedule-location";if(r.备注)node("small",r.备注,body)}else if(page==='home'&&k==='meet'){
+ if(showStageBadge){
+   const badge=node('span',value,cell);badge.className='stage-badge task-stage-badge';
+   badge.style.setProperty('--stage-color',customerStageColor(lookupClient(r.客户)));
+ }
+}
+ if(r.地点||r.备注){
+   const notes=page==='task'?node('div',null,body):body;
+   if(notes!==body)notes.className='task-notes';
+   if(r.地点)node('small',r.地点,notes).className='schedule-location';
+   if(r.备注)node('small',r.备注,notes);
+ }
+}else if(page==='home'&&k==='meet'){
  const meta=node('small',null,body);meta.className='workbench-meeting-meta';
  node('span',client(r.客户)||'—',meta);meta.append(workbenchScheduleSummary(r));
  const details=[r.地点,r.目的,r.状态].filter(Boolean).join(' · ');if(details)node('small',details,body).className='schedule-location';
@@ -2348,7 +2861,7 @@ function render(){document.body.dataset.page=page;document.body.classList.toggle
    if(document.fonts)document.fonts.ready.then(positionGlass);
  }
  markNav(page);
- $('h1').textContent=names[page];renderStageHelpEntry();renderPageActions();const add=$('#add'),k=page==='home'?'client':page;add.hidden=!schema[k];add.textContent='＋ 新增'+names[k];add.onclick=event=>editor(k,{},null,null,event.currentTarget);
+ $('h1').textContent=names[page];renderStageHelpEntry();renderPageActions();const add=$('#add'),k=page==='home'?'client':page;add.hidden=!schema[k];add.textContent='＋ 新增'+names[k];add.onclick=event=>editor(k,{},null,null,event.currentTarget);if(page==='home'){add.textContent='会后速记';add.onclick=()=>showQuickClientEntry(add);add.setAttribute('aria-haspopup','dialog')}else add.removeAttribute('aria-haspopup');
  const metrics=$('#metrics');metrics.replaceChildren();metrics.className=page==='home'?'metrics':'';if(page==='home')for(const [label,num] of [['客户数量',state.client.length],['待跟进事项',state.task.filter(isPendingTask).length]]){const m=node('div',label,metrics);m.className='metric';node('b',String(num),m)}
  renderClientTools();const bar=$('#filters');bar.replaceChildren();if(schema[page]){const wrap=node('div',null,bar);wrap.className='search-field';const q=node('input',null,wrap);q.id='search';q.type='search';q.placeholder='搜索'+names[page];q.setAttribute('aria-label',q.placeholder);q.value=query;const clear=button('×',()=>{q.value='';q.oninput();q.focus()},wrap);clear.className='clear-query';clear.hidden=!query;clear.setAttribute('aria-label','清空关键词');let pending=0;q.oninput=()=>{query=q.value;clear.hidden=!query;cancelAnimationFrame(pending);pending=requestAnimationFrame(()=>{if(q.isConnected)drawRows()})};const opts=page==='meet'?choices.meet:null;if(opts){const s=node('select',null,bar);s.setAttribute('aria-label','状态筛选');s.add(new Option(page==='client'?'未成交':'全部状态',''));for(const v of opts)s.add(new Option(v,v));s.value=filter;s.onchange=()=>{filter=s.value;drawRows()}}}drawRows()}
 if(window.visualViewport){
