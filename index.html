@@ -714,7 +714,7 @@ dialog.stage-help-dialog::backdrop{background:rgba(0,0,0,.32);backdrop-filter:no
 }
 @media(max-width:540px){
  :root{--narrow-card-space:12px}
- #rows article:is(.client-listing,.task-record){padding:var(--narrow-card-space);overflow-wrap:anywhere}
+ body[data-page="client"] #rows .client-listing,#rows article.task-record{padding:var(--narrow-card-space);overflow-wrap:anywhere}
  body[data-page="client"] #rows .client-listing .client-summary,
  #rows .task-record .task-metadata{grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--narrow-card-space)}
  body[data-page="client"] #rows .client-summary>:is(.client-name,span:last-child){grid-column:1/-1}
