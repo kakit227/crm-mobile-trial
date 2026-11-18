@@ -771,6 +771,17 @@ dialog[open],dialog[open] #fields{overscroll-behavior:contain}
 @media(prefers-contrast:more){
  html[data-touch-focus] :is(main,dialog) :is(input,textarea):focus-visible{outline:2px solid var(--appearance-focus)!important}
 }
+article .task-field{display:flex;flex-direction:column;gap:4px;min-width:0}
+article .task-field .workbench-schedule{display:flex;flex-direction:column;gap:2px;min-width:0}
+.schedule-time-trigger{display:flex;justify-content:space-between;align-items:center;gap:8px;width:100%;min-height:44px;text-align:start}
+.schedule-time-trigger strong{font-variant-numeric:tabular-nums}
+dialog.schedule-time-sheet{position:fixed;inset:auto 0 0;margin:0 auto;width:min(100%,480px);max-width:100%;max-height:calc(var(--visible-height,100dvh) - 12px);padding:16px 16px max(16px,env(safe-area-inset-bottom));border-radius:20px 20px 0 0;overflow:auto;overscroll-behavior:contain;background:var(--appearance-surface,#fafafa)}
+dialog.schedule-time-sheet::backdrop{background:var(--appearance-scrim,#0004)}
+dialog[data-editor]:has(.schedule-time-sheet[open]) #fields{overflow:hidden}
+@media(prefers-reduced-motion:no-preference){
+ dialog.schedule-time-sheet[open]{animation:schedule-sheet-in .18s ease-out}
+ @keyframes schedule-sheet-in{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+}
 </style>
 
 <aside><header class="studio-brand"><div class="monogram" role="img" aria-label="C 与 H"><span class="signature">C<i>&amp;</i>H</span></div></header><nav></nav></aside><main><div class="trial-banner"><span>测试版，请勿录入真实客户资料</span><button type="button" id="reset-trial">恢复样例</button></div><div class="studio-clock"><time id="studio-clock" aria-label="当前日期"></time></div><div class="bar"><h1></h1><button id="add" class="primary"></button></div><div id="client-tools" hidden></div><div id="metrics"></div><section class="panel"><div id="filters"></div><div id="rows"></div></section></main><dialog aria-labelledby="editor-title"><form><h2 id="editor-title"></h2><div id="fields"></div><div class="actions"><button type="button" id="close">取消</button><button class="primary">保存</button></div></form></dialog><dialog id="delete-client" aria-labelledby="delete-heading" aria-describedby="delete-description"><h2 id="delete-heading">请确认是否删除客户</h2><p id="delete-description"></p><p id="delete-error" role="alert"></p><div class="actions"><button id="delete-cancel" type="button" autofocus>取消</button><button id="delete-confirm" type="button">确认删除</button></div></dialog><dialog id="studio-notice" aria-labelledby="notice-message"><p id="notice-message"></p><form method="dialog"><button autofocus>好</button></form></dialog><dialog id="discard-editor" aria-labelledby="discard-heading" aria-describedby="discard-message"><h2 id="discard-heading">放弃未保存的更改？</h2><p id="discard-message">放弃后，本次编辑的内容将不会保存。</p><form method="dialog" class="actions"><button autofocus>继续编辑</button><button type="button" data-discard>放弃更改</button></form></dialog><script>
@@ -1138,7 +1149,7 @@ document.addEventListener('keydown',event=>{
 },true);
 
 function showNotice(text){const previous=document.activeElement;const notice=document.getElementById("studio-notice");document.getElementById("notice-message").textContent=text;if(!notice.open){notice.addEventListener('close',()=>{if(previous?.isConnected)previous.focus()},{once:true});openModal(notice)}}
-function persist(next,msg){
+function persist(next,msg,editedId=null){
  if(locked){showNotice('当前资料无法安全读取，保存已停用。');return false}
  next.history.unshift({text:msg,date:new Date().toLocaleString('zh-CN')});
  try{
@@ -1146,7 +1157,7 @@ function persist(next,msg){
    const serialized=JSON.stringify(next);localStorage.setItem(key,serialized);savedVersion=serialized;
  }catch{showNotice('保存失败，请检查浏览器存储权限或剩余空间。');return false}
  state=next;
- try{if(page==='client'||page==='task'){renderClientTools();drawRows()}else render()}catch{showNotice('资料已保存，页面刷新失败。请重新打开页面查看。')}
+ try{if(page==='client'||page==='task'){renderClientTools();drawRows(editedId)}else render()}catch{showNotice('资料已保存，页面刷新失败。请重新打开页面查看。')}
  return true;
 }
 
@@ -1694,7 +1705,7 @@ function workbenchScheduleSummary(record){
   date.dateTime=record.日期;
   date.setAttribute('aria-label',record.日期.replace(/-/,'年').replace(/-/,'月')+'日');
  }
- const text=record.时间?(record.结束时间?record.时间+'–'+record.结束时间:record.时间+'起'):'全天';
+ const text=scheduleTimeText(record);
  node('span',text,summary).className='workbench-schedule-time';
  return summary;
 }
@@ -1704,40 +1715,26 @@ function scheduleTimeText(r){
 function timeRangeEditor(parent,record){
  const group=node('fieldset',null,parent);group.className='schedule-time-range';
  node('legend','时间段',group);
- let allDay=!record.时间&&!record.结束时间,active=-1,draft='00:00',motion=null,sectionMotion=null;
- const inputs=[],triggers=[],wheels=[];
+ let allDay=!record.时间&&!record.结束时间,active=-1,draft='00:00',sectionMotion=null;
+ const values=[record.时间||'',record.结束时间||''],triggers=[],wheels=[];
  const toggle=button('全天',()=>{allDay=!allDay;reflect(true)},group);
  toggle.className='all-day-switch';toggle.setAttribute('role','switch');
  const times=node('div',null,group);times.className='schedule-time-inputs';
- for(const [index,label,value] of [[0,'开始时间',record.时间],[1,'结束时间',record.结束时间]]){
-  const field=node('div',null,times);field.className='schedule-time-field';
-  const caption=node('label',label,field),line=node('div',null,field);line.className='schedule-time-line';
-  const input=node('input',null,line);input.type='text';input.inputMode='numeric';input.placeholder='HH:mm';input.value=value||'';input.maxLength=5;input.autocomplete='off';
-  input.id='schedule-time-'+crypto.randomUUID();caption.htmlFor=input.id;input.setAttribute('aria-label',label+'，24小时制');
-  const trigger=button('⌄',()=>active===index?close():open(index),line);
-  trigger.setAttribute('aria-label','选择'+label);trigger.setAttribute('aria-expanded','false');
-  input.addEventListener('focus',()=>close(false));
-  input.addEventListener('input',()=>close(false));
-  input.addEventListener('keydown',e=>{
-   if(e.isComposing||e.altKey||e.ctrlKey||e.metaKey||!['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.key))return;
-   e.preventDefault();e.stopPropagation();close(false);
-   const minute=(input.selectionStart||0)>2;
-   if(e.key==='ArrowLeft'||e.key==='ArrowRight'){input.setSelectionRange(e.key==='ArrowLeft'?0:3,e.key==='ArrowLeft'?2:5);return}
-   const parts=(/^([01]\d|2[0-3]):[0-5]\d$/.test(input.value)?input.value:'00:00').split(':');
-   const i=minute?1:0,limit=minute?59:23;
-   parts[i]=String(Math.max(0,Math.min(limit,Number(parts[i])+(e.key==='ArrowUp'?1:-1)))).padStart(2,'0');
-   input.value=parts.join(':');input.setSelectionRange(minute?3:0,minute?5:2);
-  });
-  inputs.push(input);triggers.push(trigger);
+ const labels=['开始时间','结束时间'];
+ for(const [index,label] of labels.entries()){
+  const trigger=button('',()=>open(index),times);
+  trigger.className='schedule-time-trigger';
+  trigger.setAttribute('aria-haspopup','dialog');trigger.setAttribute('aria-expanded','false');
+  node('span',label,trigger);node('strong',values[index]||'请选择',trigger);
+  triggers.push(trigger);
  }
- const panel=node('div',null,times);panel.className='schedule-time-panel';panel.hidden=true;
- panel.setAttribute('role','group');
+ const panel=node('dialog',null,group);panel.className='schedule-time-panel schedule-time-sheet';
  const heading=node('div',null,panel);heading.className='wheel-heading';
  const title=node('strong','选择时间',heading);
  button('取消',()=>close(),heading);
  button('完成',()=>{
   if(active<0)return;
-  readWheels();inputs[active].value=draft;close();
+  readWheels();values[active]=draft;triggers[active].querySelector('strong').textContent=draft;close();
  },heading);
  const grid=node('div',null,panel);grid.className='schedule-wheel-grid';
  function select(i,n){
@@ -1757,34 +1754,22 @@ function timeRangeEditor(parent,record){
    wheel.scrollTop=n*36;select(i,n);
   });
  }
- function transition(opening){
-  const style=getComputedStyle(panel),from=panel.hidden?{opacity:0,transform:'translateY(-3px)'}:{opacity:style.opacity,transform:style.transform};
-  motion?.cancel();panel.hidden=false;panel.inert=!opening;
-  const finish=()=>{panel.hidden=active<0;motion=null};
-  if(matchMedia('(prefers-reduced-motion: reduce)').matches){finish();return}
-  const effect=panel.animate([from,opening?{opacity:1,transform:'none'}:{opacity:0,transform:'translateY(-3px)'}],{duration:opening?160:100,easing:'ease-out'});
-  motion=effect;effect.finished.then(()=>{if(motion===effect)finish()},()=>{});
- }
  function open(index){
-  if(allDay)return;
-  active=index;draft=/^([01]\d|2[0-3]):[0-5]\d$/.test(inputs[index].value)?inputs[index].value:'00:00';
-  title.textContent=index===0?'开始时间':'结束时间';panel.setAttribute('aria-label','选择'+title.textContent);
-  triggers.forEach((b,i)=>b.setAttribute('aria-expanded',String(i===index)));transition(true);
+  if(allDay||panel.open)return;
+  active=index;draft=/^([01]\d|2[0-3]):[0-5]\d$/.test(values[index])?values[index]:'00:00';
+  title.textContent=labels[index];panel.setAttribute('aria-label','选择'+title.textContent);
+  const trigger=triggers[index];
+  trigger.setAttribute('aria-expanded','true');
+  openModal(panel,trigger);
+  panel.addEventListener('close',()=>{active=-1;trigger.setAttribute('aria-expanded','false')},{once:true});
   wheels.forEach((w,i)=>{const n=Number(draft.split(':')[i]);w.scrollTop=n*36;select(i,n)});
+  wheels[0].focus({preventScroll:true});
  }
- function close(restoreFocus=true){
-  if(active<0)return;
-  const trigger=triggers[active];active=-1;
-  triggers.forEach(b=>b.setAttribute('aria-expanded','false'));
-  if(restoreFocus&&panel.contains(document.activeElement))trigger.focus({preventScroll:true});
-  transition(false);
- }
- group.addEventListener('keydown',e=>{if(e.key==='Escape'&&active>=0){e.preventDefault();e.stopPropagation();close()}});
- group.addEventListener('focusout',e=>{if(e.relatedTarget&&!group.contains(e.relatedTarget))close(false)});
+ function close(){if(panel.open)panel.close()}
  function reflect(animated=false){
   toggle.setAttribute('aria-checked',String(allDay));toggle.setAttribute('aria-label','全天，'+(allDay?'已开启':'已关闭'));
-  if(allDay)close(false);
-  times.inert=allDay;inputs.forEach(input=>input.disabled=allDay);
+  if(allDay)close();
+  times.inert=allDay;triggers.forEach(trigger=>trigger.disabled=allDay);
   if(!animated||matchMedia('(prefers-reduced-motion: reduce)').matches){sectionMotion?.cancel();sectionMotion=null;times.hidden=allDay;return}
   const from=times.hidden?0:getComputedStyle(times).opacity;
   sectionMotion?.cancel();sectionMotion=null;
@@ -1794,11 +1779,11 @@ function timeRangeEditor(parent,record){
  }
  reflect();
  return {
-  read(){return {时间:allDay?'':inputs[0].value.trim(),结束时间:allDay?'':inputs[1].value.trim()}},
+  read(){return {时间:allDay?'':values[0],结束时间:allDay?'':values[1]}},
   validate(){
    if(allDay)return '';
-   const values=inputs.map(x=>x.value.trim()),valid=/^([01]\d|2[0-3]):[0-5]\d$/;
-   if(values.some(v=>!valid.test(v)))return '请填写有效的开始与结束时间，例如 09:30。';
+   const valid=/^([01]\d|2[0-3]):[0-5]\d$/;
+   if(values.some(v=>!valid.test(v)))return '请选择开始与结束时间。';
    return values[1]>values[0]?'':'结束时间须晚于开始时间，请选择同日时间段。';
   }
  };
@@ -1971,7 +1956,13 @@ function editor(k,r={},fromTask=null,referrer=null,opener=document.activeElement
  if(k==="client"&&!r.id)item.createdAt=new Date().toISOString();
  if(k==="task"&&e.submitter?.classList.contains("complete-task")){if(next.client.find(c=>String(c.id)===item.客户)?.cycleConflict){showNotice("请先在列表中确认该客户的销售循环。");return}item.completedAt=new Date().toISOString();item.completedCycle=stepLabel(Number(cycle.value))}
  if(r.id)next[k][next[k].findIndex(x=>x.id===r.id)]=item;else next[k].unshift(item);if(fromTask){const t=next.task.find(x=>x.id===fromTask);if(t){t.completedCycle=taskCycle(t);t.completedAt=new Date().toISOString()}}
- if(persist(next,(r.id?'编辑':'新增')+names[k]+' · '+title(k,item)))d.close()};guardEditor(d,()=>JSON.stringify(readValues()));openModal(d,opener)}
+ if(persist(next,(r.id?'编辑':'新增')+names[k]+' · '+title(k,item),r.id||null)){
+   if(r.id&&(page==='client'||page==='task'))d.addEventListener('close',()=>{
+     const row=[...document.querySelectorAll('#rows article[data-row-id]')].find(entry=>entry.dataset.rowId===String(r.id));
+     if(row&&(row.getBoundingClientRect().bottom<=0||row.getBoundingClientRect().top>=innerHeight))row.scrollIntoView({block:'nearest',behavior:'instant'});
+   },{once:true});
+   d.close();
+ }};guardEditor(d,()=>JSON.stringify(readValues()));openModal(d,opener)}
 function confirmDeletion(kind,record){
  const rowIndex=Array.from(document.querySelectorAll('#rows article')).indexOf(document.activeElement?.closest('article'));
  const dialog=$('#delete-client'),cancel=$('#delete-cancel'),remove=$('#delete-confirm'),status=$('#delete-error');
@@ -2207,7 +2198,7 @@ function virtualRows(host,entries,appendRecord,anchorIndex=0){
 }
 
 let restoreListPosition=false,searchSource,searchDate,searchRecords,lastListSignature="";
-function drawRows(){
+function drawRows(editedId=null){
  const signature=JSON.stringify([page,query,filter,page==='client'?listPrefs:taskPrefs]);
  const oldRow=lastListSignature===signature?Array.from(document.querySelectorAll('#rows article[data-row-id]')).find(r=>r.getBoundingClientRect().bottom>0):null;
  const retained=oldRow?{id:oldRow.dataset.rowId,index:Number(oldRow.dataset.virtualIndex||0),top:oldRow.getBoundingClientRect().top}:null;
@@ -2237,9 +2228,11 @@ const excel=button('导出 Excel 文件',()=>exportClientExcel(excel,feedback),a
  const matches=entries.filter(([k,r])=>(k==='client'||!filter||r.状态===filter)&&(!term||searchable(k,r).includes(term)||(k==='client'&&matchesPhone(r,term))));
  count=matches.length;
  function appendRecord([k,r],group){
-const row=node("article",null,group);row.dataset.rowId=r.id;if(k==="task")row.classList.add("record-hover","task-record");let actionHost=row;if(k==="client"){clientListing(r,row);return}else{const body=node("div",null,row);const heading=node("strong",title(k,r)+(k==="task"&&r.completedAt?" · 已完成":""),body);if(page==="home"&&section==="task"&&r.日期>today())node("span","请跟进",heading).className="followup-reminder";if(page==="home"&&section==="meet")node("span",k==="task"?"跟进":"会面",heading).className="agenda-kind";if(k==="task"){body.classList.add("task-body");const meta=node("small",null,body);meta.className="task-metadata";for(const label of ["跟进客户","跟进日期","销售循环"])node("span",label,meta).className="task-field-label";for(const [i,value] of [client(r.客户),[r.日期,scheduleTimeText(r)].filter(Boolean).join(' · '),taskCycle(r)].entries()){
- const cell=node('span',page==='home'&&i===1?'':value||'—',meta);cell.className='task-field-value';
- if(page==='home'&&i===1)cell.append(workbenchScheduleSummary(r));
+const row=node("article",null,group);row.dataset.rowId=r.id;if(k==="task")row.classList.add("record-hover","task-record");let actionHost=row;if(k==="client"){clientListing(r,row);return}else{const body=node("div",null,row);const heading=node("strong",title(k,r)+(k==="task"&&r.completedAt?" · 已完成":""),body);if(page==="home"&&section==="task"&&r.日期>today())node("span","请跟进",heading).className="followup-reminder";if(page==="home"&&section==="meet")node("span",k==="task"?"跟进":"会面",heading).className="agenda-kind";if(k==="task"){body.classList.add("task-body");const meta=node("small",null,body);meta.className="task-metadata";for(const [i,[label,value]] of [["跟进客户",client(r.客户)],["跟进日期",r.日期],["销售循环",taskCycle(r)]].entries()){
+ const field=node('span',null,meta);field.className='task-field';
+ node('span',label,field).className='task-field-label';
+ const cell=node('span',i===1?'':value||'—',field);cell.className='task-field-value';
+ if(i===1)cell.append(workbenchScheduleSummary(r));
 }if(r.地点)node("small",r.地点,body).className="schedule-location";if(r.备注)node("small",r.备注,body)}else if(page==='home'&&k==='meet'){
  const meta=node('small',null,body);meta.className='workbench-meeting-meta';
  node('span',client(r.客户)||'—',meta);meta.append(workbenchScheduleSummary(r));
@@ -2249,7 +2242,7 @@ const row=node("article",null,group);row.dataset.rowId=r.id;if(k==="task")row.cl
 }
  if((page==='client'||page==='task')&&count>192){
    const visit=restoreListPosition?listVisits.get(page):retained;
-   const found=visit?matches.findIndex(([,r])=>String(r.id)===String(visit.id)):-1;
+   const found=matches.findIndex(([,r])=>String(r.id)===String(editedId??visit?.id));
    const anchor=found>=0?found:visit?Math.min(count-1,Math.max(0,visit.index)):0;
    disposeRows=virtualRows(group,matches,appendRecord,anchor);
  }else if(page==='home'&&count>24){
