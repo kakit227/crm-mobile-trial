@@ -842,6 +842,18 @@ dialog:is([data-editor="client"],[data-editor="task"],[data-editor="log"]) form>
  #quick-client-entry .actions button{transition:transform .16s ease-out}
  #quick-client-entry .actions button:not(:disabled):active{transform:scale(.96)}
 }
+dialog[data-editor="client"] #fields .identity-row .birth-group{
+ grid-template-columns:minmax(0,1fr) minmax(max-content,1.45fr)
+}
+dialog[data-editor="client"] #fields .identity-row .birthday-trigger{
+ justify-content:flex-start;padding-inline:8px 22px;white-space:nowrap;
+ font-variant-numeric:tabular-nums;min-height:44px
+}
+@media (max-width:360px) and (orientation:portrait){
+ dialog[data-editor="client"] #fields .identity-row{grid-template-columns:repeat(2,minmax(0,1fr))}
+ dialog[data-editor="client"] #fields .identity-row .birth-group{grid-column:1/-1}
+ dialog[data-editor="client"] #fields .identity-row>.birthday-panel{top:100%}
+}
 </style>
 
 <aside><header class="studio-brand"><div class="monogram" role="img" aria-label="C 与 H"><span class="signature">C<i>&amp;</i>H</span></div></header><nav></nav></aside><main><div class="trial-banner"><span>测试版，请勿录入真实客户资料</span><button type="button" id="reset-trial">恢复样例</button></div><div class="studio-clock"><time id="studio-clock" aria-label="当前日期"></time></div><div class="bar"><h1></h1><button id="add" class="primary"></button></div><div id="client-tools" hidden></div><div id="metrics"></div><section class="panel"><div id="filters"></div><div id="rows"></div></section></main><dialog aria-labelledby="editor-title"><form><h2 id="editor-title"></h2><div id="fields"></div><div class="actions"><button type="button" id="close">取消</button><button class="primary">保存</button></div></form></dialog><dialog id="delete-client" aria-labelledby="delete-heading" aria-describedby="delete-description"><h2 id="delete-heading">请确认是否删除客户</h2><p id="delete-description"></p><p id="delete-error" role="alert"></p><div class="actions"><button id="delete-cancel" type="button" autofocus>取消</button><button id="delete-confirm" type="button">确认删除</button></div></dialog><dialog id="studio-notice" aria-labelledby="notice-message"><p id="notice-message"></p><form method="dialog"><button autofocus>好</button></form></dialog><dialog id="discard-editor" aria-labelledby="discard-heading" aria-describedby="discard-message"><h2 id="discard-heading">放弃未保存的更改？</h2><p id="discard-message">放弃后，本次编辑的内容将不会保存。</p><form method="dialog" class="actions"><button autofocus>继续编辑</button><button type="button" data-discard>放弃更改</button></form></dialog><script>
