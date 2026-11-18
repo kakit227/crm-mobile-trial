@@ -711,17 +711,22 @@ dialog.stage-help-dialog::backdrop{background:rgba(0,0,0,.32);backdrop-filter:no
 .trial-banner button{min-height:44px}
 @media (hover:none) and (pointer:coarse){
  #rows :is(.client-name,.actions button){touch-action:manipulation}
- #rows .record-hover::before,#rows .record-hover::after{display:none}
- dialog[data-editor][open],dialog[data-editor]::backdrop,
- dialog[data-editor] :is(.gender-menu,.task-calendar,.birthday-panel,.phone-menu,.client-search-panel,.schedule-time-panel){
-  -webkit-backdrop-filter:none!important;backdrop-filter:none!important
- }
- dialog[data-editor][open]{background:var(--appearance-surface,#fafafa)}
- #rows .actions button{transition-property:transform}
 }
-@media (hover:none) and (pointer:coarse) and (prefers-reduced-motion:no-preference){
- dialog[data-editor][open],#rows .client-more:not([hidden]){animation:trial-touch-enter .14s ease-out}
- @keyframes trial-touch-enter{from{transform:translateY(4px);opacity:.75}to{transform:translateY(0);opacity:1}}
+@media(max-width:540px){
+ :root{--narrow-card-space:12px}
+ #rows article:is(.client-listing,.task-record){padding:var(--narrow-card-space);overflow-wrap:anywhere}
+ body[data-page="client"] #rows .client-listing .client-summary,
+ #rows .task-record .task-metadata{grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--narrow-card-space)}
+ body[data-page="client"] #rows .client-summary>:is(.client-name,span:last-child){grid-column:1/-1}
+ #rows article.task-record{grid-template-columns:minmax(0,1fr);gap:var(--narrow-card-space)}
+ #rows article.task-record>.actions{grid-column:1;grid-row:4;justify-self:start;flex-direction:row}
+ #rows .actions,dialog[data-editor] form>.actions{flex-wrap:wrap;gap:var(--narrow-card-space)}
+ #rows :is(.client-name,.actions button),dialog[data-editor] form>.actions button{min-height:44px}
+ dialog[data-editor] #fields{row-gap:var(--narrow-card-space)}
+}
+@media(max-width:360px){
+ body[data-page="client"] #rows .client-listing .client-summary,
+ #rows .task-record .task-metadata{grid-template-columns:minmax(0,1fr)}
 }
 </style>
 
@@ -2179,8 +2184,9 @@ let motion;
  if(clock.parentElement!==brand)brand.append(clock);
  if(compact){
    const buttonBox=backup.getBoundingClientRect(),brandBox=brand.getBoundingClientRect();
-   clock.style.left=(buttonBox.left+buttonBox.width/2-brandBox.left)+'px';
- }else clock.style.removeProperty('left');
+   const left=(buttonBox.left+buttonBox.width/2-brandBox.left)+'px';
+   if(clock.style.left!==left)clock.style.left=left;
+ }else if(clock.style.left)clock.style.removeProperty('left');
 }
 
 let geometryFrame=0;
