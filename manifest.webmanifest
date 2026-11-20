@@ -9,7 +9,15 @@
   "background_color": "#f6f6f6",
   "theme_color": "#f6f6f6",
   "icons": [
-    {"src": "./crm-icon-192.png", "sizes": "192x192", "type": "image/png"},
-    {"src": "./crm-icon-512.png", "sizes": "512x512", "type": "image/png"}
+    {
+      "src": "./crm-ch-connected-v1-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "./crm-ch-connected-v1-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
   ]
 }
