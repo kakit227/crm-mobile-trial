@@ -886,6 +886,13 @@ body:is([data-modal-locked],[data-phone-search-keyboard])>nav{visibility:hidden}
  html:is([data-device="iphone"],[data-device="phone"]){--phone-nav-bottom:calc(env(safe-area-inset-bottom) + 4px)}
  .trial-install-help{display:none}
 }
+html[data-device="iphone"][data-home-screen-app]{--phone-nav-bottom:0px}
+html[data-device="iphone"][data-home-screen-app] body>nav{
+ inset-inline:0;
+ padding-inline:max(14px,calc(env(safe-area-inset-left) + 6px)) max(14px,calc(env(safe-area-inset-right) + 6px));
+ padding-bottom:calc(6px + env(safe-area-inset-bottom));
+ border-radius:0
+}
 html[data-home-screen-app] .trial-install-help{display:none}
 .trial-install-help{margin-block:16px 0}
 .trial-install-help summary{display:flex;align-items:center;min-height:44px;cursor:pointer}
@@ -904,7 +911,7 @@ function detectDevice(agent, platform, touches){
 const device=detectDevice(navigator.userAgent,navigator.platform,navigator.maxTouchPoints);
 document.documentElement.dataset.device=device;
 const phoneLayout=device==='iphone'||device==='phone';
-if(navigator.standalone===true)document.documentElement.setAttribute('data-home-screen-app','');
+if(navigator.standalone===true||window.matchMedia('(display-mode: standalone)').matches)document.documentElement.setAttribute('data-home-screen-app','');
 const offersHomeScreenHelp=device==='iphone'&&/Safari\//i.test(navigator.userAgent)
  &&!/CriOS|FxiOS|EdgiOS|OPiOS|DuckDuckGo/i.test(navigator.userAgent);
 const $=s=>document.querySelector(s), key='ch-studio-mobile-trial-v1', today=()=>new Date().toLocaleDateString('sv-SE');
