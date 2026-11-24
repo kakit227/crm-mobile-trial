@@ -1,0 +1,23 @@
+{
+  "id": "/crm-mobile-trial-v2/",
+  "name": "C&H 客户工作室 2.0 测试版",
+  "short_name": "客户工作室 2.0 测试版",
+  "lang": "zh-CN",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f4eee3",
+  "theme_color": "#f4eee3",
+  "icons": [
+    {
+      "src": "./ch-studio-192-7acf913ad62b.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "./ch-studio-512-51a3a298f486.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
